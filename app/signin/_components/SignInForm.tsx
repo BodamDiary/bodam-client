@@ -34,7 +34,7 @@ const SignInForm = () => {
             setTimeout(() => {
                 router.push("/create-group");
             }, 1500);
-        } catch (error) {
+        } catch {
             toast.error("로그인에 실패했습니다.");
         }
     };
