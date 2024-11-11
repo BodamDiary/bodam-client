@@ -6,8 +6,9 @@ import {toast} from "sonner";
 import {setLoginUser} from "@/app/_utils/loginUserInfo";
 
 const SignInForm = () => {
-    const [email, setEmail] = useState<string>();
-    const [password, setPassword] = useState<string>();
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [showPassword, setShowPassword] = useState<boolean>(false);
     const router = useRouter();
 
     const handleLoginButton = async () => {
@@ -49,14 +50,27 @@ const SignInForm = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
-            <input
-                type="password"
-                id="password"
-                className="h-[46px] w-full rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50"
-                placeholder="비밀번호"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="relative w-full">
+                <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    className="h-[46px] w-full rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50"
+                    placeholder="비밀번호"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-placeholder text-opacity-50"
+                >
+                    <img
+                        src={showPassword ? "/icons/icon-eye-open.svg" : "/icons/icon-eye-closed.svg"}
+                        alt={showPassword ? "Hide password" : "Show password"}
+                        className="w-4 h-4 opacity-50"
+                    />
+                </button>
+            </div>
             <button
                 onClick={() => handleLoginButton()}
                 className="h-[46px] w-full rounded-2xl bg-main_300 text-white font-bold text-base tracking-tight leading-4 px-5 py-2.5">
