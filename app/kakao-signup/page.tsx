@@ -1,9 +1,21 @@
-import React from "react";
-import SignUpForm from "./_components/SignUpForm";
+"use client"
+
+import React, { useEffect, useState } from "react";
+import KakaoSignUpForm from "./_components/KakaoSignUpForm";
 import Link from "next/link";
 import Image from "next/image";
+import {useRouter} from "next/navigation"
 
 export default function SignUpPage(){
+    const router = useRouter();
+    const [email, setEmail] = useState("");
+
+    useEffect(() => {
+        // 쿼리 파라미터에서 email 값을 가져옴
+        const query = new URLSearchParams(window.location.search);
+        setEmail(query.get("email"));
+    }, []);
+
     return(
         <main className="flex min-h-screen flex-col items-center select-none overflow-x-hidden overflow-y-hidden">
             <section className="mt-[120px] w-full py-2 px-5">
@@ -13,7 +25,7 @@ export default function SignUpPage(){
                             보호자분의 계정을 생성해볼까요?
                         </h3>
                     </div>
-                    <SignUpForm />
+                    <KakaoSignUpForm email={email}/>
                 </div>
                 <p className="flex mt-[35px] w-full justify-center gap-2 text-placeholder font-bold">or</p>
                 <Link
@@ -25,7 +37,7 @@ export default function SignUpPage(){
                 </Link>
                 <div className="mt-[35px] w-full flex flex-col justify-center">
                     <Link
-                        href="signin"
+                        href="signup"
                         className="w-full flex justify-center">
                         <span className="text-sm font-medium text-gray-400">
                             이미 계정이 있으신가요? {" "}
