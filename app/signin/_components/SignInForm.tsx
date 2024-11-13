@@ -13,7 +13,7 @@ const SignInForm = () => {
 
     const handleLoginButton = async () => {
         try {
-            const response = await fetch("/users/login-user", {
+            const response = await fetch("http://localhost:8080/users/login-user", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

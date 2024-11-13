@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation"
 import {toast} from "sonner";
 import {setLoginUser} from "@/app/_utils/loginUserInfo";
 
-const SignUpForm = ({ email }) => {
+const KakaoSignUpForm = ({ email }) => {
 //     const email = signin 페이지에서 가져오기
     const [name, setName] = useState<string>('');
     const [nickName, setNickName] = useState<string>('');
@@ -80,4 +80,4 @@ const SignUpForm = ({ email }) => {
     );
 }
 
-export default SignUpForm;
+export default KakaoSignUpForm;
