@@ -39,7 +39,7 @@ const ProfileTitleForm = () => {
         <button onClick={handleGoBack}>
               <BackIcon />
         </button>
-        <span className="text-xl font-bold">보담 프로필 설정</span>
+        <span className="text-lg font-bold">보담 프로필 설정</span>
         <Link href="#">
              <MoreIcon />
         </Link>
