@@ -1,20 +1,15 @@
-"use client"
 
 import React, { useEffect, useState } from "react";
 import KakaoSignUpForm from "./_components/KakaoSignUpForm";
 import Link from "next/link";
 import Image from "next/image";
-import {useRouter} from "next/navigation"
+import { cookies } from 'next/headers';
 
 export default function SignUpPage(){
-    const router = useRouter();
-    const [email, setEmail] = useState("");
 
-    useEffect(() => {
-        // 쿼리 파라미터에서 email 값을 가져옴
-        const query = new URLSearchParams(window.location.search);
-        setEmail(query.get("email"));
-    }, []);
+    console.log(cookies());
+    const email = cookies().get('email')?.value;
+    console.log(email);
 
     return(
         <main className="flex min-h-screen flex-col items-center select-none overflow-x-hidden overflow-y-hidden">
