@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter} from 'next/navigation';
 
 const BackIcon = () => {
     return (
@@ -20,10 +20,6 @@ interface TitleFormProps {
 
 const TitleForm: React.FC<TitleFormProps> = ({ item }) => {
     const router = useRouter();
-
-    const searchParams = useSearchParams();
-    const item = searchParams.get('item'); // Get the 'item' query parameter
-
 
     const handleGoBack = () => {
         router.back();
