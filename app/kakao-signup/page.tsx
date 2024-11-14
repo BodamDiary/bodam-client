@@ -1,5 +1,4 @@
 
-import React, { useEffect, useState } from "react";
 import KakaoSignUpForm from "./_components/KakaoSignUpForm";
 import Link from "next/link";
 import Image from "next/image";
