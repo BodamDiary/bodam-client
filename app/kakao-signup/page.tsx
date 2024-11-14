@@ -23,7 +23,7 @@ export default function SignUpPage(){
                 </div>
                 <p className="flex mt-[35px] w-full justify-center gap-2 text-placeholder font-bold">or</p>
                 <Link
-                    href="http://localhost:8080/kakao"
+                    href="/kakao"
                     className="mt-[35px] w-full flex justify-center">
                     <div className="relative w-[60px] h-[60px] ">
                         <Image src="/icons/icon-kakao-circle.png" alt="카카오톡 로그인" fill />
