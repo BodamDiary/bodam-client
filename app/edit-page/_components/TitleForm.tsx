@@ -38,7 +38,7 @@ const TitleForm = () => {
         </button>
         <span className="text-xl font-bold">{item}</span>
         <button onClick={FinishButton}>
-             <span class="text-blue-400 text-base font-bold">완료</span>
+             <span className="text-blue-400 text-base font-bold">완료</span>
         </button>
     </>
     )
