@@ -14,7 +14,7 @@ const InfoForm = () => {
     item: string;
   }
 
-  const GoToEditPage: React.FC<GoToEditPageProps> = ({ item }) => (
+  const GoToEditPage = ({ item } : GoToEditPageProps) => (
     <button onClick={() => goToEditPage(item)}>
       <EditIcon />
     </button>
