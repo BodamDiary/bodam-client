@@ -21,7 +21,7 @@ export default function Info() {
   return (
     <main className="relative">
       <div className="flex items-center justify-around mt-10">
-        <ProfileTitleForm className="absolute top-5"/>
+        <ProfileTitleForm/>
       </div>
       <div>
         <div className="flex justify-center mt-18 pt-8 pb-4">
