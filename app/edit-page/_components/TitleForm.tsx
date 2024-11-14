@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter} from 'next/navigation';
 
 const BackIcon = () => {
     return (
