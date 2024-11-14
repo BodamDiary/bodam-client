@@ -1,12 +1,11 @@
 "use client";
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import TitleForm from "./_components/TitleForm";
 
 const EditPage = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const item = searchParams.get('item'); // Get the 'item' query parameter
 
