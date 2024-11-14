@@ -24,7 +24,7 @@ const MoreIcon = () => (
 
 const ProfileTitleForm = () => {
     const router = useRouter();
-    const menuRef = useRef(null);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     const handleGoBack = () => {
         router.back();
