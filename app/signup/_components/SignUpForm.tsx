@@ -18,7 +18,7 @@ const SignUpForm = () => {
 
     const handleLoginButton = async () => {
         try {
-            const response = await fetch("/users/register-user", {
+            const response = await fetch("http://localhost:8080/users/register-user", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
