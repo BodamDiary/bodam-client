@@ -6,11 +6,15 @@ import Image from "next/image";
 const InfoForm = () => {
   const router = useRouter();
 
-  const goToEditPage = (item) => {
+  const goToEditPage = (item: string) => {
     router.push('/edit-page?item=' + item);
   };
 
-  const GoToEditPage = ({ item }) => (
+  interface GoToEditPageProps {
+    item: string;
+  }
+
+  const GoToEditPage = ({ item } : GoToEditPageProps) => (
     <button onClick={() => goToEditPage(item)}>
       <EditIcon />
     </button>

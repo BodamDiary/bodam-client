@@ -18,7 +18,7 @@ interface TitleFormProps {
   item: string | null; // item이 null일 수 있으므로 null 타입도 포함합니다.
 }
 
-const TitleForm: React.FC<TitleFormProps> = ({ item }) => {
+const TitleForm = ({ item } : TitleFormProps) => {
     const router = useRouter();
 
     const handleGoBack = () => {
