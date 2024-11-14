@@ -46,12 +46,21 @@ const KakaoSignUpForm = ({ email }) => {
 
     return (
         <>
+
+            <input
+                id="email"
+                className="h-[46px] w-full rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50"
+                placeholder="이메일"
+                value={email}
+                readOnly
+            />
             <input
                 type="text"
                 id="name"
                 className="h-[46px] w-full rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50"
                 placeholder="이름"
                 value={name}
+                autoComplete="on"
                 onChange={(e) => setName(e.target.value)}
             />
             <input
@@ -68,6 +77,7 @@ const KakaoSignUpForm = ({ email }) => {
                 className="h-[46px] w-full rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50"
                 placeholder="집 주소(선택)"
                 value={address}
+                autoComplete="on"
                 onChange={(e) => setAddress(e.target.value)}
             />
 

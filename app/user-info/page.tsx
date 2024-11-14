@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import ProfileTitleForm from "./_components/ProfileTitleForm";
 import InfoForm from "./_components/InfoForm";
+import MenuBar from "@/app/_components/MenuBar";
 
 const EditProfileIcon = () => (
   <Image
@@ -44,6 +45,7 @@ export default function Info() {
         </div>
       </div>
        <InfoForm/>
+       <MenuBar/>
     </main>
   );
 }
