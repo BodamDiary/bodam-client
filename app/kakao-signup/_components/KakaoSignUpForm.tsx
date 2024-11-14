@@ -9,7 +9,7 @@ interface KakaoSignUpFormProps {
   email: string | null; // item이 null일 수 있으므로 null 타입도 포함합니다.
 }
 
-const KakaoSignUpForm: React.FC<TitleFormProps> = ({ email }) => {
+const KakaoSignUpForm: React.FC<KakaoSignUpFormProps> = ({ email }) => {
 //     const email = signin 페이지에서 가져오기
     const [name, setName] = useState<string>('');
     const [nickName, setNickName] = useState<string>('');
