@@ -24,7 +24,7 @@ const EditPage = () => {
         type="text"
         id="name"
         className="h-[35px] w-full rounded-2xl focus:outline-none border text-gray-900 text-lg border-none px-2 py-2.5 text-placeholder"
-        placeholder={item}
+        placeholder={item || ""}
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
