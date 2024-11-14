@@ -41,8 +41,8 @@ const ProfileTitleForm = () => {
 
     // Close menu when clicking outside
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
+        const handleClickOutside = (event: MouseEvent<HTMLButtonElement>) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
                 setMenuOpen(false);
             }
         };
