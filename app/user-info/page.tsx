@@ -1,3 +1,4 @@
+"use client"
 
 import React from "react";
 import Image from "next/image";
@@ -16,7 +17,29 @@ const EditProfileIcon = () => (
   />
 );
 
-export default function Info() {
+async function getUser() {
+    try {
+        // Next.js 프록시 API 호출
+        const response = await fetch("/proxy?path=users/get-user/2");
+
+        if (!response.ok) {
+            const errorDetails = await response.text();
+            throw new Error(`사용자 불러오기에 실패했습니다: ${errorDetails}`);
+        }
+
+        const user = await response.json(); // JSON 데이터 파싱
+        return user;
+    } catch (error) {
+        console.error("Error fetching user through proxy:", error.message);
+        throw error;
+    }
+}
+
+
+
+export default async function Info() {
+
+  const user = await getUser();
 
   return (
     <main className="relative">
@@ -39,12 +62,12 @@ export default function Info() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center font-bold">보담맘</div>
+        <div className="flex justify-center font-bold">{user.nickname}</div>
         <div className="flex justify-center text-sm text-slate-500">
-          dahee.pk@gmail.com
+          {user.email}
         </div>
       </div>
-       <InfoForm/>
+       <InfoForm userId={user.userId}/>
        <MenuBar/>
     </main>
   );
