@@ -5,23 +5,25 @@ import {useRouter} from "next/navigation"
 import {toast} from "sonner";
 import {setLoginUser} from "@/app/_utils/loginUserInfo";
 
-const KakaoSignUpForm = ({ email }) => {
+// interface KakaoSignUpFormProps {
+//   email: string | null; // item이 null일 수 있으므로 null 타입도 포함합니다.
+// }
+
+const KakaoSignUpForm = () => {
 //     const email = signin 페이지에서 가져오기
     const [name, setName] = useState<string>('');
     const [nickName, setNickName] = useState<string>('');
     const [address, setAddress] = useState<string>('');
     const router = useRouter();
-    console.log(email);
 
     const handleLoginButton = async () => {
         try {
-            const response = await fetch("http://localhost:8080/users/register-user", {
+            const response = await fetch("/users/register-user", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    email,
                     name,
                     nickName,
                     address,
@@ -39,7 +41,7 @@ const KakaoSignUpForm = ({ email }) => {
             setTimeout(() => {
                 router.push("/create-group");
             }, 1500);
-        } catch (error) {
+        } catch {
             toast.error("회원가입에 실패했습니다.");
         }
     };
@@ -47,13 +49,6 @@ const KakaoSignUpForm = ({ email }) => {
     return (
         <>
 
-            <input
-                id="email"
-                className="h-[46px] w-full rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50"
-                placeholder="이메일"
-                value={email}
-                readOnly
-            />
             <input
                 type="text"
                 id="name"

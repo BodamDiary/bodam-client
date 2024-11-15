@@ -1,15 +1,14 @@
 
-import React, { useEffect, useState } from "react";
 import KakaoSignUpForm from "./_components/KakaoSignUpForm";
 import Link from "next/link";
 import Image from "next/image";
-import { cookies } from 'next/headers';
+// import { cookies } from 'next/headers';
 
 export default function SignUpPage(){
 
-    console.log(cookies());
-    const email = cookies().get('email')?.value;
-    console.log(email);
+//     console.log(cookies());
+//     const email = cookies().get('email')?.value;
+//     console.log(email);
 
     return(
         <main className="flex min-h-screen flex-col items-center select-none overflow-x-hidden overflow-y-hidden">
@@ -20,11 +19,11 @@ export default function SignUpPage(){
                             보호자분의 계정을 생성해볼까요?
                         </h3>
                     </div>
-                    <KakaoSignUpForm email={email}/>
+                    <KakaoSignUpForm/>
                 </div>
                 <p className="flex mt-[35px] w-full justify-center gap-2 text-placeholder font-bold">or</p>
                 <Link
-                    href="http://localhost:8080/kakao"
+                    href="/kakao"
                     className="mt-[35px] w-full flex justify-center">
                     <div className="relative w-[60px] h-[60px] ">
                         <Image src="/icons/icon-kakao-circle.png" alt="카카오톡 로그인" fill />

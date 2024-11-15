@@ -6,11 +6,15 @@ import Image from "next/image";
 const InfoForm = () => {
   const router = useRouter();
 
-  const goToEditPage = (item) => {
+  const goToEditPage = (item: string) => {
     router.push('/edit-page?item=' + item);
   };
 
-  const GoToEditPage = ({ item }) => (
+  interface GoToEditPageProps {
+    item: string;
+  }
+
+  const GoToEditPage = ({ item } : GoToEditPageProps) => (
     <button onClick={() => goToEditPage(item)}>
       <EditIcon />
     </button>
@@ -25,11 +29,11 @@ const InfoForm = () => {
     />
   );
 
-  const goToEditLevel = (item) => {
+  const goToEditLevel = (item : string) => {
       router.push('/edit-page?item=' + item);
     };
 
-  const GoToEditLevel = ({ item }) => (
+  const GoToEditLevel = ({ item } : GoToEditPageProps) => (
       <button onClick={() => goToEditLevel(item)}>
         <EditLevelIcon />
       </button>
@@ -82,21 +86,21 @@ const InfoForm = () => {
           <div className="mr-5">
             <div className="flex items-center justify-between w-full pr-4">
               <span className="font-semi-bold text-base pl-3 mt-4 mb-3">의사소통 수준</span>
-              <GoToEditLevel />
+              <GoToEditLevel item="c"/>
             </div>
             <hr className="mt-1" />
           </div>
           <div className="mr-5">
             <div className="flex items-center justify-between w-full pr-4">
               <span className="font-semi-bold text-base pl-3 mt-4 mb-3">인지능력 수준</span>
-              <GoToEditLevel />
+              <GoToEditLevel item="p"/>
             </div>
             <hr className="mt-1" />
           </div>
           <div className="mr-5">
             <div className="flex items-center justify-between w-full pr-4">
               <span className="font-semi-bold text-base pl-3 mt-4 mb-3">일상생활 수행능력</span>
-              <GoToEditLevel />
+              <GoToEditLevel item="d"/>
             </div>
             <hr className="mt-1" />
           </div>

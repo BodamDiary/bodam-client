@@ -20,7 +20,7 @@ const KakaoLoginButton = () => {
     return (
         <div>
             <Link
-                href="http://localhost:8080/kakao"
+                href="http://43.200.165.116/kakao"
                 className="flex items-center justify-center font-bold w-full gap-2 px-4 py-3 text-[#191919] bg-[#FEE500] rounded-md hover:bg-[#FDD835] transition-colors"
             >
                 <KakaoIcon/>

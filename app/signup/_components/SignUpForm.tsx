@@ -18,7 +18,7 @@ const SignUpForm = () => {
 
     const handleLoginButton = async () => {
         try {
-            const response = await fetch("http://localhost:8080/users/register-user", {
+            const response = await fetch("/users/register-user", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const SignUpForm = () => {
             setTimeout(() => {
                 router.push("/create-group");
             }, 1500);
-        } catch (error) {
+        } catch {
             toast.error("회원가입에 실패했습니다.");
         }
     };

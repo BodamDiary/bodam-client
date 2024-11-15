@@ -1,12 +1,11 @@
 "use client";
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import TitleForm from "./_components/TitleForm";
 
 const EditPage = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const item = searchParams.get('item'); // Get the 'item' query parameter
 
@@ -25,7 +24,7 @@ const EditPage = () => {
         type="text"
         id="name"
         className="h-[35px] w-full rounded-2xl focus:outline-none border text-gray-900 text-lg border-none px-2 py-2.5 text-placeholder"
-        placeholder={item}
+        placeholder={item || ""}
         value={name}
         onChange={(e) => setName(e.target.value)}
       />

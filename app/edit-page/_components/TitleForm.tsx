@@ -1,8 +1,7 @@
 "use client"
 
-import Link from "next/link";
 import Image from "next/image";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter} from 'next/navigation';
 
 const BackIcon = () => {
     return (
@@ -15,14 +14,12 @@ const BackIcon = () => {
     )
 };
 
+interface TitleFormProps {
+  item: string | null; // item이 null일 수 있으므로 null 타입도 포함합니다.
+}
 
-
-const TitleForm = () => {
+const TitleForm = ({ item } : TitleFormProps) => {
     const router = useRouter();
-
-    const searchParams = useSearchParams();
-    const item = searchParams.get('item'); // Get the 'item' query parameter
-
 
     const handleGoBack = () => {
         router.back();
@@ -37,9 +34,9 @@ const TitleForm = () => {
         <button onClick={handleGoBack}>
               <BackIcon />
         </button>
-        <span className="text-xl font-bold">{item}</span>
+        <span className="text-xl font-bold">{item || "수정 페이지"}</span>
         <button onClick={FinishButton}>
-             <span class="text-blue-400 text-base font-bold">완료</span>
+             <span className="text-blue-400 text-base font-bold">완료</span>
         </button>
     </>
     )

@@ -7,7 +7,7 @@ export default function MenuBar() {
     return (
     <div className="fixed bottom-7 w-full bg-white flex justify-around items-center py-4 px-2">
         <Link
-            href="http://localhost:3000"
+            href="/"
             className="">
             <Image
                   src="/icons/icon-home.svg"
@@ -18,7 +18,7 @@ export default function MenuBar() {
         </Link>
 
         <Link
-            href="http://localhost:3000"
+            href="/"
             className="">
             <Image
                   src="/icons/icon-calendar.svg"
@@ -29,7 +29,7 @@ export default function MenuBar() {
         </Link>
 
         <Link
-            href="http://localhost:3000"
+            href="/"
             className="">
             <Image
                   src="/icons/icon-add-diary.svg"
@@ -40,7 +40,7 @@ export default function MenuBar() {
         </Link>
 
         <Link
-            href="http://localhost:3000"
+            href="/"
             className="">
             <Image
                   src="/icons/icon-diary.svg"
@@ -51,7 +51,7 @@ export default function MenuBar() {
         </Link>
 
         <Link
-            href="http://localhost:3000/user-info"
+            href="/"
             className="">
             <Image
                   src="/icons/icon-mypage.svg"

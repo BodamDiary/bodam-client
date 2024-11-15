@@ -29,7 +29,7 @@ export default function SignInPage(){
                     <p className="flex w-full justify-center gap-4 text-placeholder font-bold">or</p>
                 </div>
                 <Link
-                    href="http://localhost:8080/kakao"
+                    href="/kakao"
                     className="mt-[100px] w-full flex justify-center">
                     <div className="relative w-[60px] h-[60px] ">
                         <Image src="/icons/icon-kakao-circle.png" alt="카카오톡 로그인" fill />
