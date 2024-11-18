@@ -54,44 +54,56 @@ const ContentDetail = async function() {
     return (
 
         <main>
-            <div className="fixed top-8 mx-4">
-                <button onClick={handleGoBack}>
-                    <BackIcon />
-                </button>
-            </div>
-            <div className="fixed top-16 left-0 w-full flex justify-center bg-white z-10">
-                <iframe
-                    width="375"
-                    height="211"
-                    src={content.url}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen>
-                </iframe>
-            </div>
-            <div className="pt-[284px]">
-                <div className="m-6">
-                    <div className="flex justify-between mb-1">
-                        <h2 className="font-bold text-xl">{content.title}</h2>
-                        <Image
-                            src="/icons/icon-heart.svg"
-                            alt="heart icon"
-                            width={20}
-                            height={20}
-                        />
-                    </div>
-                    <div className="text-base mb-6">{content.tag}</div>
-                    <div className="text-sm text-gray-500 mb-3">{content.description}</div>
+            <div>
+                <div className="fixed top-8 mx-4">
+                    <button onClick={handleGoBack}>
+                        <BackIcon />
+                    </button>
                 </div>
-                <div className="mx-6 mt-8 mb-40">
-                    {mainTitles.map((title, index) => (
-                        <div key={index} className="mb-10">
-                            <h3 className="text-lg font-semibold mb-2">{title}</h3>
-                            <p className="text-base text-gray-700 whitespace-pre-wrap">{body[index]}</p>
+                <div className="fixed top-16 left-0 w-full bg-white z-10">
+                    <iframe
+                        width="375"
+                       height="211"
+                       src={content.url}
+                       title="YouTube video player"
+                       frameBorder="0"
+                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                       referrerPolicy="strict-origin-when-cross-origin"
+                       allowFullScreen>
+                    </iframe>
+
+                    <div className="w-full bg-white px-6 py-2 border-t border-gray-300">
+                        <div className="flex justify-between mb-1">
+                            <h2 className="font-bold text-xl">{content.title}</h2>
+                            <Image
+                                src="/icons/icon-heart.svg"
+                                alt="heart icon"
+                                width={20}
+                                height={20}
+                            />
                         </div>
-                    ))}
+                    </div>
+                </div>
+                <div className="pt-[310px]">
+                    <div className="mx-6 mt-4 mb-40">
+                        <div className="text-base">{content.tag}</div>
+                        <div className="text-sm text-gray-500 mb-5">{content.description}</div>
+                        {mainTitles.map((title, index) => (
+                            <div key={index} className="mb-10">
+                                <h3 className="text-lg font-semibold mb-2">{title}</h3>
+                                <p className="text-base text-gray-700 whitespace-pre-wrap">{body[index]}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="fixed bottom-10 w-full">
+                    <Image
+                        src="/images/fadeout.svg"
+                        alt="fadeout"
+                        className="w-full"
+                        width={375}
+                        height={50}
+                    />
                 </div>
             </div>
             <MenuBar/>

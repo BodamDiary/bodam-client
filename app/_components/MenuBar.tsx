@@ -40,7 +40,7 @@ export default function MenuBar() {
         </Link>
 
         <Link
-            href="/"
+            href="/diary"
             className="">
             <Image
                   src="/icons/icon-diary.svg"
@@ -51,7 +51,7 @@ export default function MenuBar() {
         </Link>
 
         <Link
-            href="/"
+            href="/user-info"
             className="">
             <Image
                   src="/icons/icon-mypage.svg"
