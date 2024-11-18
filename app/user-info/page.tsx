@@ -1,4 +1,3 @@
-"use client"
 
 import React from "react";
 import Image from "next/image";
@@ -20,7 +19,7 @@ const EditProfileIcon = () => (
 async function getUser() {
     try {
         // Next.js 프록시 API 호출
-        const response = await fetch("/proxy?path=users/get-user/2");
+        const response = await fetch("http://localhost:8080/users/get-user/2");
 
         if (!response.ok) {
             const errorDetails = await response.text();

@@ -12,8 +12,10 @@ function formatDate(dateString: string): string {
 }
 
 interface InfoFormProps {
-  userId: int | null; // item이 null일 수 있으므로 null 타입도 포함합니다.
+  userId: Integer|null; // item이 null일 수 있으므로 null 타입도 포함합니다.
 }
+
+let bodam;
 
 const InfoForm = async ({userId} : InfoFormProps) => {
   const router = useRouter();
@@ -62,23 +64,25 @@ const InfoForm = async ({userId} : InfoFormProps) => {
 
   async function getBodam() {
       try {
-          // Next.js 프록시 API 호출
-          const response = await fetch(`/proxy?path=bodam/get-bodam/${userId}`);
+            // Next.js 프록시 API 호출
+          let response = await fetch(`http://localhost:8080/bodam/get-bodam/${userId}`);
 
           if (!response.ok) {
               const errorDetails = await response.text();
-              throw new Error(`사용자 불러오기에 실패했습니다: ${errorDetails}`);
+              throw new Error(`보담이 불러오기에 실패했습니다: ${errorDetails}`);
           }
 
-          const bodam = await response.json(); // JSON 데이터 파싱
-          return bodam;
+          response = await response.json(); // JSON 데이터 파싱
+          return response;
       } catch (error) {
           console.error("Error fetching user through proxy:", error.message);
           throw error;
       }
   }
 
-  const bodam = await getBodam();
+  if (bodam == null) {
+    bodam = await getBodam();
+  }
 
   return (
     <>
