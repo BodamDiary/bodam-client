@@ -12,6 +12,16 @@ function formatDate(dateString: string): string {
     return `${year}.${month}.${day}`;
 }
 
+interface Bodam {
+    userId: number;
+    bodamId: number;
+    cognitiveAbility: number;
+    performanceAbility: number;
+    bodamName:string;
+    bodamGender:string;
+    birthday:string;
+
+}
 interface InfoFormProps {
   userId: number|null; // item이 null일 수 있으므로 null 타입도 포함합니다.
 }
@@ -61,9 +71,9 @@ const InfoForm = ({userId} : InfoFormProps) => {
     />
   );
 
-    const [bodam, setBodam] = useState(null); // 보담 데이터 상태
-    const [loading, setLoading] = useState(true); // 로딩 상태
-    const [error, setError] = useState(null); // 에러 상태
+    const [bodam, setBodam] = useState<Bodam|null>(null); // 보담 데이터 상태
+    const [loading, setLoading] = useState<boolean|null>(true); // 로딩 상태
+    const [error, setError] = useState<string|null>(null); // 에러 상태
 
     useEffect(() => {
         // 보담 데이터 가져오기 함수
@@ -80,8 +90,11 @@ const InfoForm = ({userId} : InfoFormProps) => {
                 const data = await response.json(); // JSON 데이터 파싱
                 setBodam(data); // 데이터 상태 업데이트
             } catch (error) {
-                console.error("Error fetching bodam data:", error.message);
-                setError(error.message); // 에러 상태 업데이트
+                if (error instanceof Error) {
+                    console.error("Error fetching bodam data:", error.message);
+                    setError(error.message); // 에러 상태 업데이트
+                }
+
             } finally {
                 setLoading(false); // 로딩 상태 종료
             }
@@ -102,6 +115,10 @@ const InfoForm = ({userId} : InfoFormProps) => {
     if (error) {
         return <p>Error: {error}</p>;
     }
+
+  if (!bodam){
+      return null;
+  }
 
   return (
     <>
