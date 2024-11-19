@@ -54,6 +54,37 @@ export default function DiaryDetail() {
     const [menuOpen, setMenuOpen] = useState(false);
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
+    const [diaryDeleted, setDiaryDeleted] = useState(false);
+    const deleted = () => setDiaryDeleted(!diaryDeleted);
+
+    useEffect(() => {
+        const diaryDeletion = async function() {
+            try {
+                const res = await fetch(`http://localhost:8080/diary/delete-diary/${diaryId}`, {
+                    method: "POST", // POST 요청
+                    headers: {
+                        "Content-Type": "application/json", // 요청 본문이 JSON임을 명시
+                    },
+                    body: JSON.stringify({ diaryId }), // 필요한 데이터 전달
+                });
+                if (!res.ok) {
+                    alert("일기 삭제가 정상적으로 이루어지지 않았습니다. 나중에 다시 시도해주세요.");
+                    throw new Error("Failed to delete diary.");
+                } else {
+                    alert("일기가 삭제되었습니다.");
+                    router.replace("/diary"); // 원하는 경로로 이동
+                }
+            } catch (err) {
+                router.refresh();
+            }
+        };
+
+        if (diaryDeleted) { // diaryDeleted가 true일 때만 실행
+            diaryDeletion();
+        }
+
+    }, [diaryDeleted]);
+
     // 데이터 로드
     useEffect(() => {
         if (!diaryId) {
@@ -151,7 +182,7 @@ export default function DiaryDetail() {
                                         <button onClick={deleteDiary} className="mt-4 px-4 py-1 w-32 h-10 bg-white border-2 border-main_600 text-main_600 rounded-xl">
                                             취소
                                         </button>
-                                        <button onClick={deleteDiary} className="mt-4 px-4 py-2 w-32 h-10 bg-main_600 text-white rounded-xl">
+                                        <button onClick={deleted} className="mt-4 px-4 py-2 w-32 h-10 bg-main_600 text-white rounded-xl">
                                            삭제하기
                                         </button>
                                     </div>

@@ -71,7 +71,7 @@ export default function Diary() {
                 </div>
             </div>
 
-            <div className="mt-32 mx-6 mb-10">
+            <div className="mt-32 mx-6 mb-24">
                 {filteredDiaries.length === 0 ? (
                     <p>일기가 없습니다.</p>
                 ) : (
