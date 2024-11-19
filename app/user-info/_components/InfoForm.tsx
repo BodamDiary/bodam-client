@@ -13,7 +13,7 @@ function formatDate(dateString: string): string {
 }
 
 interface InfoFormProps {
-  userId: Integer|null; // item이 null일 수 있으므로 null 타입도 포함합니다.
+  userId: number|null; // item이 null일 수 있으므로 null 타입도 포함합니다.
 }
 
 const InfoForm = ({userId} : InfoFormProps) => {
