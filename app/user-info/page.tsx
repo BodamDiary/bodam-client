@@ -29,8 +29,10 @@ async function getUser() {
         const user = await response.json(); // JSON 데이터 파싱
         return user;
     } catch (error) {
-        console.error("Error fetching user through proxy:", error.message);
-        throw error;
+        if (error instanceof Error){
+            console.error("Error fetching user through proxy:", error.message);
+            throw error;
+        }
     }
 }
 
