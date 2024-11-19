@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function MenuBar() {
 
     return (
-    <div className="fixed bottom-0 w-full bg-white flex justify-around items-center pt-4 pb-11 px-2">
+    <div className="fixed bottom-0 w-full bg-white flex justify-around items-center pt-4 pb-8 px-2">
         <Link
             href="/"
             className="">
@@ -40,7 +40,7 @@ export default function MenuBar() {
         </Link>
 
         <Link
-            href="/"
+            href="/diary"
             className="">
             <Image
                   src="/icons/icon-diary.svg"
@@ -51,7 +51,7 @@ export default function MenuBar() {
         </Link>
 
         <Link
-            href="/"
+            href="/user-info"
             className="">
             <Image
                   src="/icons/icon-mypage.svg"
