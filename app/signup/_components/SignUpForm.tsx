@@ -41,7 +41,7 @@ const SignUpForm = () => {
 
             toast.success("회원가입이 성공적으로 이뤄졌습니다!");
             setTimeout(() => {
-                router.push("/create-group");
+                router.push("/");
             }, 1500);
         } catch {
             toast.error("회원가입에 실패했습니다.");

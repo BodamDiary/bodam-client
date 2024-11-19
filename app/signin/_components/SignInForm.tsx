@@ -33,7 +33,7 @@ const SignInForm = () => {
 
             toast.success("로그인이 성공적으로 이뤄졌습니다!");
             setTimeout(() => {
-                router.push("/create-group");
+                router.push("/dashboard");
             }, 1500);
         } catch {
             toast.error("로그인에 실패했습니다.");
