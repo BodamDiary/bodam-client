@@ -51,9 +51,11 @@ const ContentDetail = function() {
 
                 const data = await response.json(); // JSON 데이터 파싱
                 setContent(data); // 데이터 상태 업데이트
-            } catch (error: any) {
-                console.error("Error fetching content:", error.message);
-                setError(error.message); // 에러 상태 업데이트
+            } catch (error) {
+                if (error instanceof Error) {
+                    console.error("Error fetching content:", error.message);
+                    setError(error.message); // 에러 상태 업데이트
+                }
             } finally {
                 setLoading(false); // 로딩 상태 종료
             }
