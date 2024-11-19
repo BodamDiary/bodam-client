@@ -25,8 +25,10 @@ const TodaySportCard = ({
       <div className="relative">
         <img
           alt={title}
-          className="w-[257px] h-[182px] rounded-t-xl object-cover"
+          className="rounded-t-xl object-cover"
           src={image}
+          width={257}
+          height={182}
         />
         {likes && (
           <div className="absolute right-3 top-3 rounded-full bg-white p-1.5 shadow">

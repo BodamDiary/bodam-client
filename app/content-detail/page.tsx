@@ -5,7 +5,16 @@ import { useRouter} from 'next/navigation';
 
 import MenuBar from "@/app/_components/MenuBar";
 
-let content;
+
+interface Content {
+    title: string;
+    url: string;
+    tag: string;
+    description: string;
+    contentId: number;
+    difficulty: number;
+}
+let content: Content | null = null;
 
 const ContentDetail = async function() {
     const router = useRouter();
@@ -25,20 +34,23 @@ const ContentDetail = async function() {
         )
     };
 
-    async function getContent() {
+    async function getContent() : Promise<Content> {
         try {
             // Next.js 프록시 API 호출
-            let response = await fetch("http://localhost:8080/content/get-content/1");
-
+            const response = await fetch("http://localhost:8080/content/get-content/1");
             if (!response.ok) {
                 const errorDetails = await response.text();
                 throw new Error(`콘텐츠 불러오기에 실패했습니다: ${errorDetails}`);
             }
 
-            response = await response.json(); // JSON 데이터 파싱
-            return response;
+            const data = await response.json(); // JSON 데이터 파싱
+            return data as Content;
         } catch (error) {
-            console.error("Error fetching user through proxy:", error.message);
+            if (error instanceof Error) {
+                console.error("Error fetching user through proxy:", error.message);
+            } else {
+                console.error("An unknown error occurred");
+            }
             throw error;
         }
     }

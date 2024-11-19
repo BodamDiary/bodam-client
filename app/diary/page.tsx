@@ -14,8 +14,18 @@ function formatDate(dateString: string): string {
     return `${year}.${month}.${day}`;
 }
 
+interface DiaryData {
+    diaryId: number;
+    userId: number;
+    studyContent: string;
+    title: string;
+    nickname: string;
+    body: string;
+    createdAt: string;
+}
+
 export default function Diary() {
-    const [diaries, setDiaries] = useState([]);
+    const [diaries, setDiaries] = useState<DiaryData[]>([]);
     const [search, setSearch] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
 
@@ -76,7 +86,7 @@ export default function Diary() {
                     <p>일기가 없습니다.</p>
                 ) : (
                     filteredDiaries.map((diary) => (
-                        <div key={diary.id} className="mb-10">
+                        <div key={diary.diaryId} className="mb-10">
                             <Link
                                 href={{
                                     pathname: "/diary-detail",

@@ -7,6 +7,16 @@ import { useRouter } from "next/navigation";
 
 import MenuBar from "@/app/_components/MenuBar";
 
+interface DiaryData {
+    diaryId: number;
+    userId: number;
+    studyContent: string;
+    title: string;
+    nickname: string;
+    body: string;
+    createdAt: string;
+}
+
 const BackIcon = () => {
     return (
         <Image
@@ -40,9 +50,9 @@ export default function DiaryDetail() {
     const router = useRouter();
     const diaryId = searchParams.get('diaryId');
 
-    const [diaryData, setDiaryData] = useState(null); // 일기 데이터를 저장
-    const [loading, setLoading] = useState(true); // 로딩 상태
-    const [error, setError] = useState(null); // 에러 상태
+    const [diaryData, setDiaryData] = useState<DiaryData|null>(null); // 일기 데이터를 저장
+    const [loading, setLoading] = useState<boolean|null>(true); // 로딩 상태
+    const [error, setError] = useState<string|null>(null); // 에러 상태
     const menuRef = useRef<HTMLDivElement>(null);
 
     const [isUpdate, setIsUpdate] = useState(false);
@@ -74,8 +84,9 @@ export default function DiaryDetail() {
                     alert("일기가 삭제되었습니다.");
                     router.replace("/diary"); // 원하는 경로로 이동
                 }
-            } catch (err) {
+            } catch {
                 router.refresh();
+                throw error;
             }
         };
 
@@ -94,18 +105,16 @@ export default function DiaryDetail() {
         }
 
         const fetchDiaryData = async () => {
-            try {
-                const res = await fetch(`http://localhost:8080/diary/get-diary/${diaryId}`);
-                if (!res.ok) {
-                    throw new Error("Failed to fetch diary data.");
-                }
-                const data = await res.json();
-                setDiaryData(data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+
+            const res = await fetch(`http://localhost:8080/diary/get-diary/${diaryId}`);
+            if (!res.ok) {
+                setError("diary not found");
             }
+            const data = await res.json();
+            setDiaryData(data);
+
+            setLoading(false);
+
         };
 
         fetchDiaryData();
