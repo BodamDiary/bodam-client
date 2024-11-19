@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 function formatDate(dateString: string): string {
@@ -15,9 +16,7 @@ interface InfoFormProps {
   userId: Integer|null; // item이 null일 수 있으므로 null 타입도 포함합니다.
 }
 
-let bodam;
-
-const InfoForm = async ({userId} : InfoFormProps) => {
+const InfoForm = ({userId} : InfoFormProps) => {
   const router = useRouter();
 
   const goToEditPage = (item: string) => {
@@ -62,27 +61,47 @@ const InfoForm = async ({userId} : InfoFormProps) => {
     />
   );
 
-  async function getBodam() {
-      try {
-            // Next.js 프록시 API 호출
-          let response = await fetch(`http://localhost:8080/bodam/get-bodam/${userId}`);
+    const [bodam, setBodam] = useState(null); // 보담 데이터 상태
+    const [loading, setLoading] = useState(true); // 로딩 상태
+    const [error, setError] = useState(null); // 에러 상태
 
-          if (!response.ok) {
-              const errorDetails = await response.text();
-              throw new Error(`보담이 불러오기에 실패했습니다: ${errorDetails}`);
-          }
+    useEffect(() => {
+        // 보담 데이터 가져오기 함수
+        async function getBodam() {
+            try {
+                // Next.js 프록시 API 호출
+                const response = await fetch(`http://localhost:8080/bodam/get-bodam/${userId}`);
 
-          response = await response.json(); // JSON 데이터 파싱
-          return response;
-      } catch (error) {
-          console.error("Error fetching user through proxy:", error.message);
-          throw error;
-      }
-  }
+                if (!response.ok) {
+                    const errorDetails = await response.text();
+                    throw new Error(`보담이 불러오기에 실패했습니다: ${errorDetails}`);
+                }
 
-  if (bodam == null) {
-    bodam = await getBodam();
-  }
+                const data = await response.json(); // JSON 데이터 파싱
+                setBodam(data); // 데이터 상태 업데이트
+            } catch (error) {
+                console.error("Error fetching bodam data:", error.message);
+                setError(error.message); // 에러 상태 업데이트
+            } finally {
+                setLoading(false); // 로딩 상태 종료
+            }
+        }
+
+        if (userId) {
+            getBodam(); // userId가 있을 때만 데이터 로드
+        } else {
+            setLoading(false);
+            setError("유효하지 않은 사용자 ID입니다.");
+        }
+    }, [userId]); // userId가 변경될 때마다 실행
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error}</p>;
+    }
 
   return (
     <>
