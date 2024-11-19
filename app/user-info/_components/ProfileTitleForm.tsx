@@ -65,8 +65,8 @@ const ProfileTitleForm = () => {
                 </button>
 
                 {menuOpen && (
-                    <div className="absolute top-8 right-0 w-32 bg-white shadow-lg border rounded-lg p-2 z-50">
-                        <button onClick={logout} className="text-left px-2 hover:bg-gray-100">로그아웃</button>
+                    <div className="absolute top-8 right-0 w-32 bg-white shadow-lg border rounded-lg px-2 py-3 z-50">
+                        <button onClick={logout} className="text-left px-2 mb-1 hover:bg-gray-100">로그아웃</button>
                         <button onClick={deleteAccount} className="text-left px-2 hover:bg-gray-100">회원 탈퇴</button>
                     </div>
                 )}
