@@ -29,16 +29,17 @@ interface InfoFormProps {
 const InfoForm = ({userId} : InfoFormProps) => {
   const router = useRouter();
 
-  const goToEditPage = (item: string) => {
-    router.push('/edit-page?item=' + item);
+  const goToEditPage = (item: string, id: string) => {
+    router.push(`/edit-page?item=${item}&id=${id}`);
   };
 
   interface GoToEditPageProps {
     item: string;
+    id: string;
   }
 
-  const GoToEditPage = ({ item } : GoToEditPageProps) => (
-    <button onClick={() => goToEditPage(item)}>
+  const GoToEditPage = ({ item, id } : GoToEditPageProps) => (
+    <button onClick={() => goToEditPage(item, id)}>
       <EditIcon />
     </button>
   );
@@ -52,12 +53,12 @@ const InfoForm = ({userId} : InfoFormProps) => {
     />
   );
 
-  const goToEditLevel = (item : string) => {
-      router.push('/edit-page?item=' + item);
+  const goToEditLevel = (item : string, id: string) => {
+      router.push(`/edit-page?item=${item}&id=${id}`);
     };
 
-  const GoToEditLevel = ({ item } : GoToEditPageProps) => (
-      <button onClick={() => goToEditLevel(item)}>
+  const GoToEditLevel = ({ item, id } : GoToEditPageProps) => (
+      <button onClick={() => goToEditLevel(item, id)}>
         <EditLevelIcon />
       </button>
     );
@@ -130,7 +131,7 @@ const InfoForm = ({userId} : InfoFormProps) => {
                 <div className="mt-3 text-xs pl-3">보담이 이름</div>
                 <div className="font-semi-bold text-base pl-3">{bodam.bodamName}</div>
               </div>
-              <GoToEditPage item="보담이 이름" />
+              <GoToEditPage item="보담이 이름" id="bodamName"/>
             </div>
             <hr className="mt-1" />
           </div>
@@ -140,7 +141,7 @@ const InfoForm = ({userId} : InfoFormProps) => {
                 <div className="mt-3 text-xs pl-3">생년월일</div>
                 <div className="font-semi-bold text-base pl-3">{formatDate(bodam.birthday)}</div>
               </div>
-              <GoToEditPage item="생년월일" />
+              <GoToEditPage item="생년월일" id="birthday" />
             </div>
             <hr className="mt-1" />
           </div>
@@ -150,29 +151,22 @@ const InfoForm = ({userId} : InfoFormProps) => {
                 <div className="mt-3 text-xs pl-3">성별</div>
                 <div className="font-semi-bold text-base pl-3">{bodam.bodamGender}</div>
               </div>
-              <GoToEditPage item="성별" />
+              <GoToEditPage item="성별" id="bodamGender"/>
             </div>
             <hr className="mt-1" />
           </div>
 
           <div className="mr-5">
             <div className="flex items-center justify-between w-full pr-4">
-              <span className="font-semi-bold text-base pl-3 mt-4 mb-3">의사소통 수준</span>
-              <GoToEditLevel item="c"/>
-            </div>
-            <hr className="mt-1" />
-          </div>
-          <div className="mr-5">
-            <div className="flex items-center justify-between w-full pr-4">
               <span className="font-semi-bold text-base pl-3 mt-4 mb-3">인지능력 수준</span>
-              <GoToEditLevel item="p"/>
+              <GoToEditLevel item="p" id="cognitiveAbility"/>
             </div>
             <hr className="mt-1" />
           </div>
           <div className="mr-5">
             <div className="flex items-center justify-between w-full pr-4">
               <span className="font-semi-bold text-base pl-3 mt-4 mb-3">일상생활 수행능력</span>
-              <GoToEditLevel item="d"/>
+              <GoToEditLevel item="d" id="performanceAbility"/>
             </div>
             <hr className="mt-1" />
           </div>

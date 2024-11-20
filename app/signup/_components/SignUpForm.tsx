@@ -9,7 +9,7 @@ const SignUpForm = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [passwordCheck, setPasswordCheck] = useState<string>('');
-    const [name, setName] = useState<string>('');
+    const [userName, setUserName] = useState<string>('');
     const [nickName, setNickName] = useState<string>('');
     const [address, setAddress] = useState<string>('');
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -18,7 +18,8 @@ const SignUpForm = () => {
 
     const handleLoginButton = async () => {
         try {
-            const response = await fetch("http://ec2-43-200-165-116.ap-northeast-2.compute.amazonaws.com/users/regist-user", {
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+            const response = await fetch(`${apiUrl}/users/regist-user`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -26,18 +27,16 @@ const SignUpForm = () => {
                 body: JSON.stringify({
                     email,
                     password,
-                    name,
+                    userName,
                     nickName,
                     address,
                 }),
             });
 
             if (!response.ok) {
+                alert("회원가입에 실패했습니다.")
                 throw new Error("회원가입에 실패했습니다.");
             }
-
-            const userData = await response.json();
-            setLoginUser(userData);
 
             toast.success("회원가입이 성공적으로 이뤄졌습니다!");
             setTimeout(() => {
@@ -102,11 +101,11 @@ const SignUpForm = () => {
             </div>
             <input
                 type="text"
-                id="name"
+                id="userName"
                 className="h-[46px] w-full rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50"
                 placeholder="이름"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
             />
             <input
                 type="text"
