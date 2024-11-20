@@ -3,6 +3,9 @@ import SignInForm from "./_components/SignInForm";
 import Link from "next/link";
 import Image from "next/image";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const url = `${apiUrl}/kakao`
+
 export default function SignInPage(){
     return(
         <main className="flex min-h-screen flex-col items-center select-none overflow-x-hidden overflow-y-hidden">
@@ -29,7 +32,7 @@ export default function SignInPage(){
                     <p className="flex w-full justify-center gap-4 text-placeholder font-bold">or</p>
                 </div>
                 <Link
-                    href="/kakao"
+                    href={url}
                     className="mt-[100px] w-full flex justify-center">
                     <div className="relative w-[60px] h-[60px] ">
                         <Image src="/icons/icon-kakao-circle.png" alt="카카오톡 로그인" fill />
