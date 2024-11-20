@@ -31,8 +31,11 @@ const SignInForm = () => {
 
             const userData = await response.json();
             if (userData) {
-                 document.cookie = `utoken=${userData}; path=/; max-age=3600;`;
+                document.cookie = `utoken=${userData}; path=/; domain=bodam-client.vercel.app; secure; max-age=3600;`;
             }
+
+            // 쿠키가 제대로 설정되었는지 확인
+            console.log('Current cookies:', document.cookie);
 
             toast.success("로그인이 성공적으로 이뤄졌습니다!");
             setTimeout(() => {
