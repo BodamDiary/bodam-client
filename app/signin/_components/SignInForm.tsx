@@ -13,7 +13,8 @@ const SignInForm = () => {
 
     const handleLoginButton = async () => {
         try {
-            const response = await fetch("http://ec2-43-200-165-116.ap-northeast-2.compute.amazonaws.com/users/login-user", {
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+            const response = await fetch(`${apiUrl}/users/login-user`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -21,10 +22,10 @@ const SignInForm = () => {
                 body: JSON.stringify({
                     email,
                     password,
-                }),
-            });
+                }),            });
 
             if (!response.ok) {
+                alert("정보가 올바르게 입력되지 않았습니다.");
                 throw new Error("로그인에 실패했습니다.");
             }
 

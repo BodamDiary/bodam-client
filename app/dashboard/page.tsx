@@ -1,6 +1,6 @@
 import TodaySportSection from "./_sections/TodaySportSection";
-import BottomNavigationBar from "./_components/BottomNavigationBar";
 import Calendar from "./_components/Calendar";
+import MenuBar from "@/app/_components/MenuBar";
 
 export default function MainPage() {
   return (
@@ -10,7 +10,7 @@ export default function MainPage() {
         <div className="border-t mx-6 border-[#d4d6dd]" />
         <Calendar />
       </div>
-      <BottomNavigationBar />
+      <MenuBar />
     </main>
   );
 }
