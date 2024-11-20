@@ -32,7 +32,8 @@ export default function Diary() {
     useEffect(() => {
         async function fetchDiaries() {
             try {
-                const response = await fetch(`http://localhost:8080/diary/get-all-diaries`);
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+                const response = await fetch(`${apiUrl}/diary/get-all-diaries`);
 
                 if (!response.ok) {
                     const errorDetails = await response.text();

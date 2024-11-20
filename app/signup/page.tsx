@@ -3,6 +3,9 @@ import SignUpForm from "./_components/SignUpForm";
 import Link from "next/link";
 import Image from "next/image";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const url = `${apiUrl}/kakao`
+
 export default function SignUpPage(){
     return(
         <main className="flex min-h-screen flex-col items-center select-none overflow-x-hidden overflow-y-hidden">
@@ -25,7 +28,7 @@ export default function SignUpPage(){
                 </Link>
                 <div className="mt-[35px] w-full flex flex-col justify-center">
                     <Link
-                        href="signin"
+                        href={url}
                         className="w-full flex justify-center">
                         <span className="text-sm font-medium text-gray-400">
                             이미 계정이 있으신가요? {" "}

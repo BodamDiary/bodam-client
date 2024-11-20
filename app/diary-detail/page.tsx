@@ -70,7 +70,8 @@ export default function DiaryDetail() {
     useEffect(() => {
         const diaryDeletion = async function() {
             try {
-                const res = await fetch(`http://localhost:8080/diary/delete-diary/${diaryId}`, {
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+                const res = await fetch(`${apiUrl}/diary/delete-diary/${diaryId}`, {
                     method: "POST", // POST 요청
                     headers: {
                         "Content-Type": "application/json", // 요청 본문이 JSON임을 명시
@@ -106,7 +107,8 @@ export default function DiaryDetail() {
 
         const fetchDiaryData = async () => {
 
-            const res = await fetch(`http://localhost:8080/diary/get-diary/${diaryId}`);
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+            const res = await fetch(`${apiUrl}/diary/get-diary/${diaryId}`);
             if (!res.ok) {
                 setError("diary not found");
             }

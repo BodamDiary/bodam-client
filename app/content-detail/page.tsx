@@ -42,7 +42,8 @@ const ContentDetail = function() {
         async function getContent() {
             try {
                 // Next.js 프록시 API 호출
-                const response = await fetch("http://localhost:8080/content/get-content/1");
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+                const response = await fetch(`${apiUrl}/content/get-content/1`);
 
                 if (!response.ok) {
                     const errorDetails = await response.text();

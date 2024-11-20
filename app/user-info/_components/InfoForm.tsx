@@ -81,7 +81,8 @@ const InfoForm = ({userId} : InfoFormProps) => {
         async function getBodam() {
             try {
                 // Next.js 프록시 API 호출
-                const response = await fetch(`http://localhost:8080/bodam/get-bodam/${userId}`);
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+                const response = await fetch(`${apiUrl}/bodam/get-bodam/${userId}`);
 
                 if (!response.ok) {
                     const errorDetails = await response.text();
