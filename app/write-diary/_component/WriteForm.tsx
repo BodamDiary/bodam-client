@@ -33,7 +33,7 @@ export default function WriteForm() {
                     const response = await res.json();
                     router.replace(`/diary-detail?diaryId=${response}`); // 원하는 경로로 이동
                 }
-            } catch {
+            } catch (error){
                 router.refresh();
                 throw error;
             }
