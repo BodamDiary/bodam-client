@@ -31,7 +31,9 @@ const SignInForm = () => {
             }
 
             const userData = await response.json();
-            setLoginUser(userData);
+            if (userData) {
+                 document.cookie = `utoken=${userData}; path=/; max-age=3600;`;
+            }
 
             toast.success("로그인이 성공적으로 이뤄졌습니다!");
             setTimeout(() => {
