@@ -3,7 +3,6 @@
 import {useState} from "react";
 import {useRouter} from "next/navigation"
 import {toast} from "sonner";
-import {setLoginUser} from "@/app/_utils/loginUserInfo";
 
 // interface KakaoSignUpFormProps {
 //   email: string | null; // item이 null일 수 있으므로 null 타입도 포함합니다.
