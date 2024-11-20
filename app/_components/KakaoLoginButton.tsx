@@ -16,11 +16,14 @@ const KakaoIcon = () => {
     )
 }
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const url = `${apiUrl}/kakao`
+
 const KakaoLoginButton = () => {
     return (
         <div>
             <Link
-                href="https://ec2-43-200-165-116.ap-northeast-2.compute.amazonaws.com:8080/kakao"
+                href={url}
                 className="flex items-center justify-center font-bold w-full gap-2 px-4 py-3 text-[#191919] bg-[#FEE500] rounded-md hover:bg-[#FDD835] transition-colors"
             >
                 <KakaoIcon/>

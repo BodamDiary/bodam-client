@@ -26,7 +26,7 @@ export default function MenuBar() {
         </Link>
 
         <Link
-            href="/"
+            href="/write-diary"
             className="rounded-[14px] bg-[#006ffd] p-3 text-white shadow-lg">
             <Plus className="h-7 w-7" />
         </Link>

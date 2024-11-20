@@ -1,17 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 
-const BackIcon = () => (
-    <Image
-        src="/icons/icon-back.svg"
-        alt="back icon"
-        width={20}
-        height={20}
-    />
-);
+import BackButton from "@/app/_components/BackButton";
 
 const MoreIcon = () => (
     <Image
@@ -23,12 +15,7 @@ const MoreIcon = () => (
 );
 
 const ProfileTitleForm = () => {
-    const router = useRouter();
     const menuRef = useRef<HTMLDivElement>(null);
-
-    const handleGoBack = () => {
-        router.back();
-    };
 
     const [menuOpen, setMenuOpen] = useState(false);
     const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -55,9 +42,7 @@ const ProfileTitleForm = () => {
 
     return (
         <>
-            <button onClick={handleGoBack}>
-                <BackIcon />
-            </button>
+            <BackButton/>
             <span className="text-lg font-bold">보담 프로필 설정</span>
             <div className="relative" ref={menuRef}>
                 <button onClick={toggleMenu}>

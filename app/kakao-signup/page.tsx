@@ -9,6 +9,8 @@ export default function SignUpPage(){
 //     console.log(cookies());
 //     const email = cookies().get('email')?.value;
 //     console.log(email);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const url = `${apiUrl}/kakao`
 
     return(
         <main className="flex min-h-screen flex-col items-center select-none overflow-x-hidden overflow-y-hidden">
@@ -23,7 +25,7 @@ export default function SignUpPage(){
                 </div>
                 <p className="flex mt-[35px] w-full justify-center gap-2 text-placeholder font-bold">or</p>
                 <Link
-                    href="/kakao"
+                    href={url}
                     className="mt-[35px] w-full flex justify-center">
                     <div className="relative w-[60px] h-[60px] ">
                         <Image src="/icons/icon-kakao-circle.png" alt="카카오톡 로그인" fill />

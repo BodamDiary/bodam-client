@@ -18,7 +18,8 @@ const KakaoSignUpForm = () => {
 
     const handleLoginButton = async () => {
         try {
-            const response = await fetch("/users/register-user", {
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+            const response = await fetch(`${apiUrl}/users/register-user`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -34,12 +35,9 @@ const KakaoSignUpForm = () => {
                 throw new Error("회원가입에 실패했습니다.");
             }
 
-            const userData = await response.json();
-            setLoginUser(userData);
-
             toast.success("회원가입이 성공적으로 이뤄졌습니다!");
             setTimeout(() => {
-                router.push("/create-group");
+                router.push("/");
             }, 1500);
         } catch {
             toast.error("회원가입에 실패했습니다.");

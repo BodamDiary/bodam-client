@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import MenuBar from "@/app/_components/MenuBar";
+import BackButton from "@/app/_components/BackButton";
 
 interface DiaryData {
     diaryId: number;
@@ -16,17 +17,6 @@ interface DiaryData {
     body: string;
     createdAt: string;
 }
-
-const BackIcon = () => {
-    return (
-        <Image
-            src="/icons/icon-back.svg"
-            alt="back icon"
-            width={20}
-            height={20}
-        />
-    );
-};
 
 const MoreIcon = () => (
     <Image
@@ -70,7 +60,8 @@ export default function DiaryDetail() {
     useEffect(() => {
         const diaryDeletion = async function() {
             try {
-                const res = await fetch(`http://localhost:8080/diary/delete-diary/${diaryId}`, {
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+                const res = await fetch(`${apiUrl}/diary/delete-diary/${diaryId}`, {
                     method: "POST", // POST 요청
                     headers: {
                         "Content-Type": "application/json", // 요청 본문이 JSON임을 명시
@@ -106,7 +97,8 @@ export default function DiaryDetail() {
 
         const fetchDiaryData = async () => {
 
-            const res = await fetch(`http://localhost:8080/diary/get-diary/${diaryId}`);
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+            const res = await fetch(`${apiUrl}/diary/get-diary/${diaryId}`);
             if (!res.ok) {
                 setError("diary not found");
             }
@@ -133,10 +125,6 @@ export default function DiaryDetail() {
         };
     }, []);
 
-    // 뒤로가기 핸들러
-    const handleGoBack = () => {
-        router.back();
-    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -151,9 +139,7 @@ export default function DiaryDetail() {
             {/* Back button and fixed section */}
             <div className="sticky top-5 z-10 bg-white p-4">
                 <div className="flex justify-between">
-                    <button onClick={handleGoBack} className="mb-4">
-                        <BackIcon />
-                    </button>
+                    <BackButton/>
                     <div className="relative" ref={menuRef}>
                         <button onClick={toggleMenu}>
                             <MoreIcon />
