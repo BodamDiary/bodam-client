@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import MenuBar from "@/app/_components/MenuBar";
+import BackButton from "@/app/_components/BackButton";
 
 interface DiaryData {
     diaryId: number;
@@ -16,17 +17,6 @@ interface DiaryData {
     body: string;
     createdAt: string;
 }
-
-const BackIcon = () => {
-    return (
-        <Image
-            src="/icons/icon-back.svg"
-            alt="back icon"
-            width={20}
-            height={20}
-        />
-    );
-};
 
 const MoreIcon = () => (
     <Image
@@ -135,10 +125,6 @@ export default function DiaryDetail() {
         };
     }, []);
 
-    // 뒤로가기 핸들러
-    const handleGoBack = () => {
-        router.back();
-    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -153,9 +139,7 @@ export default function DiaryDetail() {
             {/* Back button and fixed section */}
             <div className="sticky top-5 z-10 bg-white p-4">
                 <div className="flex justify-between">
-                    <button onClick={handleGoBack} className="mb-4">
-                        <BackIcon />
-                    </button>
+                    <BackButton/>
                     <div className="relative" ref={menuRef}>
                         <button onClick={toggleMenu}>
                             <MoreIcon />
