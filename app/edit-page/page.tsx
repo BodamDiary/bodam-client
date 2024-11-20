@@ -30,7 +30,7 @@ const EditPage = () => {
 
 
   const finishButton = () => {
-      if ((id === 'bodamName' & item === '보담이 이름') | (id === 'birthday' & item === '생년월일') | (id === 'bodamGender' & item === '성별')) {
+      if ((id === 'bodamName' && item === '보담이 이름') || (id === 'birthday' && item === '생년월일') || (id === 'bodamGender' && item === '성별')) {
          alert(`${item} 변경`);
       }
       else {

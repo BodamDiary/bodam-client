@@ -3,7 +3,6 @@
 import {useState} from "react";
 import {useRouter} from "next/navigation"
 import {toast} from "sonner";
-import {setLoginUser} from "@/app/_utils/loginUserInfo";
 
 const SignUpForm = () => {
     const [email, setEmail] = useState<string>('');
