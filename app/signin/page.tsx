@@ -37,11 +37,7 @@ export default function SignInPage(){
                     <div className="relative w-[60px] h-[60px] ">
                         <Image src="/icons/icon-kakao-circle.png" alt="카카오톡 로그인" fill />
                     </div>
-
-
-
                 </Link>
-
             </section>
         </main>
     );
