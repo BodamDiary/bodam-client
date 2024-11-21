@@ -3,8 +3,19 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
-
+// const KakaoLoginButton = () => {
+//     const router = useRouter();
+//
+//     const handleKakaoLogin = async () => {
+//         try {
+//             const response = await fetch.get("${apiUrl}/kakao"), {
+//                 withCredentials: true
+//             });
+//         }
+//     }
+// }
 const KakaoIcon = () => {
     return (
         <Image

@@ -22,7 +22,9 @@ const KakaoSignUpForm = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Access-Control-Allow-Credentials": "true",
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     name,
                     nickName,
