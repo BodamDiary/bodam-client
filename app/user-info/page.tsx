@@ -1,48 +1,24 @@
 export const dynamic = 'force-dynamic';
 
 import React from "react";
-import Image from "next/image";
-import Link from "next/link";
+import {cookies} from "next/headers";
 
 import ProfileTitleForm from "./_components/ProfileTitleForm";
 import InfoForm from "./_components/InfoForm";
+import UserInfoForm from "./_components/UserInfoForm";
 import MenuBar from "@/app/_components/MenuBar";
-
-const EditProfileIcon = () => (
-  <Image
-    src="/icons/icon-editProfile.svg"
-    alt="edit profile icon"
-    width={25}
-    height={25}
-  />
-);
-
-async function getUser() {
-    try {
-        // Next.js 프록시 API 호출
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        const response = await fetch(`${apiUrl}/users/get-user/2`);
-
-        if (!response.ok) {
-            const errorDetails = await response.text();
-            throw new Error(`사용자 불러오기에 실패했습니다: ${errorDetails}`);
-        }
-
-        const user = await response.json(); // JSON 데이터 파싱
-        return user;
-    } catch (error) {
-        if (error instanceof Error){
-            console.error("Error fetching user through proxy:", error.message);
-            throw error;
-        }
-    }
-}
-
-
+import ErrorPage from "@/app/_components/ErrorPage";
 
 export default async function Info() {
 
-  const user = await getUser();
+  const cookieStore = await cookies();
+  const JSESSIONID = cookieStore.get('JSESSIONID');
+
+  if (JSESSIONID == null) {
+    return (
+      <ErrorPage/>
+    )
+  }
 
   return (
     <main className="relative">
@@ -50,27 +26,9 @@ export default async function Info() {
         <ProfileTitleForm />
       </div>
       <div>
-        <div className="flex justify-center mt-18 pt-8 pb-4">
-          <div className="relative">
-            <Image
-              src="/images/profileImg.svg"
-              alt="profile image"
-              width={80}
-              height={80}
-            />
-            <div className="absolute bottom-0 right-0">
-              <Link href="/">
-                <EditProfileIcon />
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-center font-bold">{user.nickname}</div>
-        <div className="flex justify-center text-sm text-slate-500">
-          {user.email}
-        </div>
+        <UserInfoForm/>
       </div>
-       <InfoForm userId={user.userId}/>
+       <InfoForm userId="10032"/>
        <MenuBar/>
     </main>
   );

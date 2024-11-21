@@ -25,13 +25,7 @@ const SignInForm = () => {
                 }),            });
 
             if (!response.ok) {
-                alert("정보가 올바르게 입력되지 않았습니다.");
                 throw new Error("로그인에 실패했습니다.");
-            }
-
-            if (response != null) {
-                const userData = await response.text();
-                document.cookie = `uToken=${userData}; path=/; max-age=3600;`;
             }
 
             toast.success("로그인이 성공적으로 이뤄졌습니다!");
