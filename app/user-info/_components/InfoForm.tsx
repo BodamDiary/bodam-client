@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 function formatDate(dateString: string): string {
     const date = new Date(dateString);
@@ -20,8 +21,8 @@ interface Bodam {
     bodamName:string;
     bodamGender:string;
     birthday:string;
-
 }
+
 interface InfoFormProps {
   userId: number|null; // item이 null일 수 있으므로 null 타입도 포함합니다.
 }
@@ -75,6 +76,7 @@ const InfoForm = ({userId} : InfoFormProps) => {
     const [bodam, setBodam] = useState<Bodam|null>(null); // 보담 데이터 상태
     const [loading, setLoading] = useState<boolean|null>(true); // 로딩 상태
     const [error, setError] = useState<string|null>(null); // 에러 상태
+    const [notFound, setNotFound] = useState<boolean|null>(false);
 
     useEffect(() => {
         // 보담 데이터 가져오기 함수
@@ -82,9 +84,12 @@ const InfoForm = ({userId} : InfoFormProps) => {
             try {
                 // Next.js 프록시 API 호출
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-                const response = await fetch(`${apiUrl}/bodam/get-bodam/${userId}`);
+                const response = await fetch(`${apiUrl}/bodam/get-bodam`);
 
-                if (!response.ok) {
+                if (response.status === '404') {
+                    setNotFound(true);
+                }
+                else if (!response.ok) {
                     const errorDetails = await response.text();
                     throw new Error(`보담이 불러오기에 실패했습니다: ${errorDetails}`);
                 }
@@ -112,6 +117,18 @@ const InfoForm = ({userId} : InfoFormProps) => {
 
     if (loading) {
         return <p>Loading...</p>;
+    }
+
+    if (setNotFound) {
+        return (
+            <div className="flex justify-center my-4">
+                <div className="w-5/6 h-[40px] bg-main_300 text-white rounded-2xl flex items-center justify-center">
+                    <Link href="/bodam-signup">
+                        보담이 등록하기
+                    </Link>
+                </div>
+            </div>
+        )
     }
 
     if (error) {
