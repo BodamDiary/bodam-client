@@ -204,7 +204,7 @@ export default function DiaryDetail() {
             {/* Scrollable body section */}
             {diaryData && (
                 <div className="flex-1 overflow-y-auto p-4 mx-2 mt-7 mb-24">
-                    <p>{diaryData.body}</p>
+                    <p className="whitespace-pre-wrap">{diaryData.body}</p>
                 </div>
             )}
             <MenuBar/>

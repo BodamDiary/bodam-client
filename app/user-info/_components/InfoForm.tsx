@@ -84,10 +84,14 @@ const InfoForm = ({userId} : InfoFormProps) => {
             try {
                 // Next.js 프록시 API 호출
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-                const response = await fetch(`${apiUrl}/bodam/get-bodam`);
+                const response = await fetch(`${apiUrl}/bodam/get-bodam`, {
+                    method: 'GET',
+                    credentials: 'include',
+                });
 
-                if (response.status === '404') {
+                if (response.status == '204') {
                     setNotFound(true);
+                    throw new Error('등록된 보담이가 없습니다');
                 }
                 else if (!response.ok) {
                     const errorDetails = await response.text();

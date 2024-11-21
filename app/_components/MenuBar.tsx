@@ -20,7 +20,7 @@ export default function MenuBar() {
         </Link>
 
         <Link
-            href="/"
+            href="/dashboard"
             className="flex flex-col items-center text-gray-500">
             <CalendarIcon className="h-7 w-7" />
         </Link>
