@@ -7,6 +7,24 @@ const nextConfig: NextConfig = {
             use: ['@svgr/webpack'],
         });
         return config;
+    },
+
+    async headers() {
+        return [
+            {
+                source: '/:path*',
+                headers: [
+                    {
+                        key: 'Access-Control-Allow-Credentials',
+                        value: 'true'
+                    },
+                    {
+                        key: 'Access-Control-Allow-Origin',
+                        value: 'https://bodam.site'
+                    },
+                ]
+            }
+        ]
     }
 };
 
