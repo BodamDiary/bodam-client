@@ -53,42 +53,41 @@ export default function WriteForm() {
 
         <>
             <div>
+            </div>
+            <div className="ml-1 mb-1 my-2.5 font-medium text-sm">
                 제목
             </div>
             <div>
                 <input
                     type="text"
                     id="title"
-                    className="h-[46px] rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50 w-full"
-                    placeholder="제목"
+                    className="h-[46px] rounded-xl focus:outline-none border placeholder-gray-400 border-main_200 px-5 py-2.5 text-sm text-placeholder text-opacity-50 w-full"
+                    placeholder="제목을 입력해주세요"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
             </div>
-            <div>
-                분야 / 분류
+            <div className="ml-1 mb-1 my-2.5 font-medium text-sm">
+                학습 내용
             </div>
             <div>
                 <input
                     type="text"
                     id="studyContent"
-                    className="h-[46px] rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50 w-full"
-                    placeholder="분야/분류"
+                    className="h-[46px] rounded-xl focus:outline-none placeholder-gray-400 border border-main_200 px-5 py-2.5 text-sm text-opacity-50 w-full"
+                    placeholder="오늘 학습한 내용을 입력해주세요"
                     value={studyContent}
                     onChange={(e) => setStudyContent(e.target.value)}
                 />
             </div>
-            <div>
-                내용
+            <div className="ml-1 mb-1 my-2.5 font-medium text-sm">
+                일기 내용
             </div>
-            <div className="flex flex-col items-center p-5">
-                <label htmlFor="large-input" className="mb-2 text-lg font-bold">
-                    큰 입력 박스
-                </label>
+            <div>
                 <textarea
                     id="large-input"
-                    className="w-full h-64 p-4 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-main_300"
-                    placeholder="내용을 입력하세요..."
+                    className="w-full h-64 p-4 text-sm rounded-xl border border-main_300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-main_300"
+                    placeholder="내용을 입력해주세요"
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
                 />
