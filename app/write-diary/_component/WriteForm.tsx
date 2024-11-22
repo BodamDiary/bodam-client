@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function WriteForm() {
     const router = useRouter();
 
-    const [diaryRegister, setDiaryRegister] = useState(false);
+    const [diaryRegister, setDiaryRegister] = useState<boolean>(false);
     const register = () => setDiaryRegister(!diaryRegister);
 
     useEffect(() => {
@@ -25,7 +25,12 @@ export default function WriteForm() {
                         body
                     }), // 필요한 데이터 전달
                 });
-                if (!res.ok) {
+
+                if (res.status == '401') {
+                    setUnauthorized(true);
+                    throw new Error("unauthorized");
+                }
+                else if (!res.ok) {
                     alert("일기 등록이 정상적으로 이루어지지 않았습니다. 나중에 다시 시도해주세요.");
                     throw new Error("Failed to register diary.");
                 } else {
@@ -48,6 +53,8 @@ export default function WriteForm() {
     const [title, setTitle] = useState<string>('');
     const [studyContent, setStudyContent] = useState<string>('');
     const [body, setBody] = useState<string>('');
+
+
 
     return (
 

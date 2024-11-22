@@ -28,7 +28,7 @@ export default async function Info() {
       <div>
         <UserInfoForm/>
       </div>
-       <InfoForm userId="10032"/>
+       <InfoForm/>
        <MenuBar/>
     </main>
   );
