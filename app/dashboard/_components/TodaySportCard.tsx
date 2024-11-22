@@ -26,11 +26,6 @@ const TodaySportCard = ({
           width={257} // 원하는 너비
           height={182} // 원하는 높이
         />
-        {likes && (
-          <div className="absolute right-3 top-3 rounded-full bg-white p-1.5 shadow">
-            <HeartIcon width={20} height={20} />
-          </div>
-        )}
       </div>
       <div className="flex flex-row justify-between items-start px-3 py-3">
         <div className="flex flex-col gap-y-1.5">
