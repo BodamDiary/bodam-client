@@ -53,7 +53,15 @@ const TodaySportSection = () => {
 
 
     if (loading) {
-        return <p>Loading: {loading}</p>; // 로딩 중
+        return (
+            <main>
+                <div className="h-[365px] flex justify-center items-center">
+                    <div className="text-2xl font-bold">
+                        오늘의 추천 운동은?
+                    </div>
+                </div>
+            </main>
+        ) // 로딩 중
     }
 
     if (error) {
@@ -63,7 +71,7 @@ const TodaySportSection = () => {
   return (
     <section className="w-full flex flex-col pt-10 pl-6 pb-9 gap-4">
       <TodaySportHeader />
-      <div className="overflow-x-scroll">
+      <div className="overflow-x-scroll pr-5">
         <div className="w-max flex flex-row justify-start items-center gap-x-4 ">
           {exercises.map((exercise) => (
             <TodaySportCard
