@@ -86,10 +86,10 @@ const InfoForm = () => {
                     credentials: 'include',
                 });
 
-                if (response.status == '401') {
+                if (response.status == 401) {
                     setUnauthorized(true);
                 }
-                if (response.status == '204') {
+                if (response.status == 204) {
                     setNotFound(true);
                     throw new Error('등록된 보담이가 없습니다');
                 }

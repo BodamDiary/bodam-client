@@ -40,10 +40,10 @@ export default function DiaryList() {
                     credentials: 'include',
                 });
 
-                if (response.status == '401') {
+                if (response.status == 401) {
                     setUnauthorized(true);
                 }
-                else if (response.status == '204') {
+                else if (response.status == 204) {
                     setNoContent(true);
                     throw new Error('등록된 일기가 없습니다');
                 }

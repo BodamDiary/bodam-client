@@ -26,7 +26,7 @@ export default function WriteForm() {
                     }), // 필요한 데이터 전달
                 });
 
-                if (res.status == '401') {
+                if (res.status == 401) {
                     alert("권한이 없습니다");
                     throw new Error("unauthorized");
                 }

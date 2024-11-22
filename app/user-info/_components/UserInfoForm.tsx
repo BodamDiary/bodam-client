@@ -45,7 +45,7 @@ export default function UserInfoForm() {
                     credentials: 'include',
                 });
 
-                if (response.status == '401') {
+                if (response.status == 401) {
                     setUnauthorized(true);
                     throw new Error("unauthorized");
                 }

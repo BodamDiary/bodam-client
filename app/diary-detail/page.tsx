@@ -107,7 +107,7 @@ export default function DiaryDetail() {
                 credentials: 'include',
             });
 
-            if (res.status == '401') {
+            if (res.status == 401) {
                 setUnauthorized(true);
             } else if (!res.ok) {
                 setError("diary not found");
