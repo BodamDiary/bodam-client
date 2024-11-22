@@ -8,7 +8,7 @@ interface TodaySportCardProps {
   id: number;
   title: string;
   image: string;
-  difficulty: string;
+  difficulty: number;
 }
 
 const TodaySportCard = ({
