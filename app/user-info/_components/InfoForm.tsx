@@ -122,7 +122,7 @@ const InfoForm = () => {
         return;
     }
 
-    if (setNotFound) {
+    if (notFound) {
         return (
             <div className="flex justify-center my-4">
                 <div className="w-5/6 h-[40px] bg-main_300 text-white rounded-2xl flex items-center justify-center">

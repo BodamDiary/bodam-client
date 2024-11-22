@@ -15,7 +15,7 @@ interface User {
     phoneNumber: string;
     agreeCondition: boolean;
     isOauth: boolean;
-    createdAt: String;
+    createdAt: string;
 }
 
 const EditProfileIcon = () => (
