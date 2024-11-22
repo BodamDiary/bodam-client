@@ -27,7 +27,7 @@ export default function WriteForm() {
                 });
 
                 if (res.status == '401') {
-                    setUnauthorized(true);
+                    alert("권한이 없습니다");
                     throw new Error("unauthorized");
                 }
                 else if (!res.ok) {
