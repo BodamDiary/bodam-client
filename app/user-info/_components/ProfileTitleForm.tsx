@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import {toast} from "sonner";
 
 import BackButton from "@/app/_components/BackButton";
 
@@ -15,6 +17,7 @@ const MoreIcon = () => (
 );
 
 const ProfileTitleForm = () => {
+    const router = useRouter();
     const menuRef = useRef<HTMLDivElement>(null);
 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -25,6 +28,52 @@ const ProfileTitleForm = () => {
 
     const [isDelete, setIsDelete] = useState(false);
     const deleteAccount = () => setIsDelete(!isDelete);
+
+    const logoutExecute = async () => {
+        try {
+
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+            const response = await fetch(`${apiUrl}/users/logout-user`, {
+                method: "GET",
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                toast.error("로그아웃 실패했습니다.");
+                throw new Error("로그아웃에 실패했습니다.");
+            }
+
+            toast.success("로그아웃 되었습니다");
+            setTimeout(() => {
+                router.push("/");
+            }, 1500);
+        } catch(error) {
+            console.error('Logout error:', error);
+        }
+    };
+
+    const deleteAccountExecute = async () => {
+        try {
+
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+            const response = await fetch(`${apiUrl}/users/delete-user`, {
+                method: "GET",
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                toast.error("회원탈퇴에 실패했습니다.");
+                throw new Error("회원탈퇴에 실패했습니다.");
+            }
+
+            toast.success("탈퇴 되었습니다");
+            setTimeout(() => {
+                router.push("/");
+            }, 1500);
+        } catch(error) {
+            console.error('Delete Account error:', error);
+        }
+    };
 
     // Close menu when clicking outside
     useEffect(() => {
@@ -65,7 +114,7 @@ const ProfileTitleForm = () => {
                                 <button onClick={logout} className="mt-4 px-4 py-1 w-32 h-10 bg-white border-2 border-main_600 text-main_600 rounded-xl">
                                     취소
                                 </button>
-                                <button onClick={logout} className="mt-4 px-4 py-2 w-32 h-10 bg-main_600 text-white rounded-xl">
+                                <button onClick={logoutExecute} className="mt-4 px-4 py-2 w-32 h-10 bg-main_600 text-white rounded-xl">
                                     로그아웃
                                 </button>
                             </div>
@@ -81,7 +130,7 @@ const ProfileTitleForm = () => {
                                 <button onClick={deleteAccount} className="mt-4 px-4 py-1 w-32 h-10 bg-white border-2 border-main_600 text-main_600 rounded-xl">
                                     취소
                                 </button>
-                                <button onClick={deleteAccount} className="mt-4 px-4 py-2 w-32 h-10 bg-main_600 text-white rounded-xl">
+                                <button onClick={deleteAccountExecute} className="mt-4 px-4 py-2 w-32 h-10 bg-main_600 text-white rounded-xl">
                                    탈퇴하기
                                 </button>
                             </div>
