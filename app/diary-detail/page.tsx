@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 import MenuBar from "@/app/_components/MenuBar";
 import BackButton from "@/app/_components/BackButton";
+import ErrorPage from "@/app/_components/ErrorPage";
 
 interface DiaryData {
     diaryId: number;
@@ -57,6 +58,8 @@ export default function DiaryDetail() {
     const [diaryDeleted, setDiaryDeleted] = useState(false);
     const deleted = () => setDiaryDeleted(!diaryDeleted);
 
+    const [unauthorized, setUnauthorized] = useState<boolean | null>(false);
+
     useEffect(() => {
         const diaryDeletion = async function() {
             try {
@@ -99,7 +102,10 @@ export default function DiaryDetail() {
 
             const apiUrl = process.env.NEXT_PUBLIC_API_URL;
             const res = await fetch(`${apiUrl}/diary/get-diary/${diaryId}`);
-            if (!res.ok) {
+
+            if (res.status == '401') {
+                setUnauthorized(true);
+            } else if (!res.ok) {
                 setError("diary not found");
             }
             const data = await res.json();
@@ -125,6 +131,11 @@ export default function DiaryDetail() {
         };
     }, []);
 
+    if (unauthorized) {
+        return (
+            <ErrorPage/>
+        )
+    }
 
     if (loading) {
         return <p>Loading...</p>;
