@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import ErrorPage from "@/app/_components/ErrorPage";
 
 function formatDate(dateString: string): string {
     const date = new Date(dateString);
@@ -28,6 +29,7 @@ export default function DiaryList() {
     const [search, setSearch] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const [noContent, setNoContent] = useState<boolean | null>(false);
+    const [unauthorized, setUnauthorized] = useState<boolean | null>(false);
 
     useEffect(() => {
         async function fetchDiaries() {
@@ -38,7 +40,10 @@ export default function DiaryList() {
                     credentials: 'include',
                 });
 
-                if (response.status == '204') {
+                if (response.status == '401') {
+                    setUnauthorized(true);
+                }
+                else if (response.status == '204') {
                     setNoContent(true);
                     throw new Error('등록된 일기가 없습니다');
                 }
@@ -61,6 +66,12 @@ export default function DiaryList() {
     const filteredDiaries = diaries.filter((diary) =>
         diary.title.includes(search) || diary.studyContent.includes(search) || diary.body.includes(search)
     );
+
+    if (unauthorized) {
+        return (
+            <ErrorPage/>
+        )
+    }
 
     if (error && !noContent) {
         return <div>{error}</div>;
