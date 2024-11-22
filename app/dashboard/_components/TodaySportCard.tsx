@@ -39,7 +39,7 @@ const TodaySportCard = ({
       <div className="flex flex-row justify-between items-start px-3 py-3">
         <div className="flex flex-col gap-y-1.5">
           <h3 className="text-sm font-medium text-[#101010]">{title}</h3>
-          <p className="text-xs text-[#939393]">{difficulty}</p>
+          <p className="text-xs text-[#939393]">난이도: {difficulty}</p>
         </div>
         <div className="flex flex-row justify-start items-center gap-x-2">
           <StarIcon width={20} height={20} />
