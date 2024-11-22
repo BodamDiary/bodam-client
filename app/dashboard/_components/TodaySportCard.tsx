@@ -2,6 +2,7 @@ import React from "react";
 
 import HeartIcon from "@/public/icons/icon-heart.svg";
 import StarIcon from "@/public/icons/icon-star.svg";
+import Image from "next/image";
 
 interface TodaySportCardProps {
   id: number;
@@ -23,12 +24,11 @@ const TodaySportCard = ({
   return (
     <div key={id} className="w-[257px] h-[249px] rounded-xl bg-white">
       <div className="relative">
-        <img
-          alt={title}
-          className="rounded-t-xl object-cover"
+        <Image
           src={image}
-          width={257}
-          height={182}
+          alt="YouTube Thumbnail"
+          width={257} // 원하는 너비
+          height={182} // 원하는 높이
         />
         {likes && (
           <div className="absolute right-3 top-3 rounded-full bg-white p-1.5 shadow">
