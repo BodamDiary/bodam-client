@@ -69,6 +69,7 @@ export default function DiaryDetail() {
                     headers: {
                         "Content-Type": "application/json", // 요청 본문이 JSON임을 명시
                     },
+                    credentials: 'include',
                     body: JSON.stringify({ diaryId }), // 필요한 데이터 전달
                 });
                 if (!res.ok) {
@@ -101,7 +102,10 @@ export default function DiaryDetail() {
         const fetchDiaryData = async () => {
 
             const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-            const res = await fetch(`${apiUrl}/diary/get-diary/${diaryId}`);
+            const res = await fetch(`${apiUrl}/diary/get-diary/${diaryId}`,{
+                method: 'GET',
+                credentials: 'include',
+            });
 
             if (res.status == '401') {
                 setUnauthorized(true);
@@ -138,7 +142,7 @@ export default function DiaryDetail() {
     }
 
     if (loading) {
-        return <p>Loading...</p>;
+        return;
     }
 
     if (error) {

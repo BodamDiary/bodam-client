@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ErrorPage from "@/app/_components/ErrorPage";
 
 interface User {
     userId: number;
@@ -31,6 +32,7 @@ export default function UserInfoForm() {
     const [user, setUser] = useState<User|null>(null);
     const [loading, setLoading] = useState<boolean|null>(true);
     const [error, setError] = useState<string|null>(null);
+    const [unauthorized, setUnauthorized] = useState<boolean | null>(false);
 
     useEffect(() => {
         // 보담 데이터 가져오기 함수
@@ -43,6 +45,10 @@ export default function UserInfoForm() {
                     credentials: 'include',
                 });
 
+                if (response.status == '401') {
+                    setUnauthorized(true);
+                    throw new Error("unauthorized");
+                }
                 if (!response.ok) {
                     const errorDetails = await response.text();
                     throw new Error(`사용자 불러오기에 실패했습니다: ${errorDetails}`);
@@ -65,8 +71,12 @@ export default function UserInfoForm() {
         getUser();
     }, []); // userId가 변경될 때마다 실행
 
+        if (unauthorized) {
+            return <ErrorPage/>
+        }
+
         if (loading) {
-            return <p>Loading...</p>;
+            return
         }
 
         if (error) {
