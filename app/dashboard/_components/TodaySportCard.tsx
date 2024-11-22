@@ -8,18 +8,14 @@ interface TodaySportCardProps {
   id: number;
   title: string;
   image: string;
-  likes?: number;
   difficulty: string;
-  rating: number;
 }
 
 const TodaySportCard = ({
   id,
   title,
   image,
-  likes,
   difficulty,
-  rating,
 }: TodaySportCardProps) => {
   return (
     <div key={id} className="w-[257px] h-[249px] rounded-xl bg-white">
@@ -43,7 +39,6 @@ const TodaySportCard = ({
         </div>
         <div className="flex flex-row justify-start items-center gap-x-2">
           <StarIcon width={20} height={20} />
-          <span className="text-[#101010] font-bold text-xs">{rating}</span>
         </div>
       </div>
     </div>

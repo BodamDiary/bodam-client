@@ -79,9 +79,7 @@ const TodaySportSection = () => {
               id={exercise.contentId}
               title={exercise.tag}
               image={exercise.thumbnail}
-              likes={exercise.likes}
               difficulty={exercise.difficulty}
-              rating={exercise.rating}
             />
           ))}
         </div>
