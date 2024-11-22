@@ -17,6 +17,16 @@ const KakaoSignUpForm = () => {
 
     const handleLoginButton = async () => {
         try {
+            if (userName == null || userName == "") {
+                toast.error("이름 필수")
+                throw new Error("이름 필수")
+            }
+
+            if (nickName == null || nickName == "") {
+                toast.error("닉네임 필수")
+                throw new Error("닉네임 필수")
+            }
+
             const apiUrl = process.env.NEXT_PUBLIC_API_URL;
             const response = await fetch(`${apiUrl}/kakao-regist-user`, {
                 method: "POST",
@@ -32,6 +42,7 @@ const KakaoSignUpForm = () => {
             });
 
             if (!response.ok) {
+                toast.error("회원가입에 실패했습니다.");
                 throw new Error("회원가입에 실패했습니다.");
             }
 
@@ -39,8 +50,8 @@ const KakaoSignUpForm = () => {
             setTimeout(() => {
                 router.push("/");
             }, 1500);
-        } catch {
-            toast.error("회원가입에 실패했습니다.");
+        } catch (error) {
+            console.error('Registration error:', error);
         }
     };
 

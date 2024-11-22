@@ -18,6 +18,39 @@ const SignUpForm = () => {
     const handleLoginButton = async () => {
         try {
             const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+            if (email == null || email == "") {
+                toast.error("이메일 필수")
+                throw new Error("이메일 필수")
+            }
+
+            if (password == null || password == "") {
+                toast.error("비밀번호 필수")
+                throw new Error("비밀번호 필수")
+            }
+
+            if (userName == null || userName == "") {
+                toast.error("이름 필수")
+                throw new Error("이름 필수")
+            }
+
+            if (nickName == null || nickName == "") {
+                toast.error("닉네임 필수")
+                throw new Error("닉네임 필수")
+            }
+
+            if (password !== passwordCheck) {
+                toast.error("비밀번호가 동일하지 않습니다")
+                throw new Error("패스워드 다름")
+            }
+
+            let reg = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~?!@#$%^&*_-]).{8,16}$/
+
+            if (!reg.test(password)) {
+                toast.error("비밀번호는 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요")
+                throw new Error("비밀번호 유효성 검사 실패")
+            }
+
             const response = await fetch(`${apiUrl}/users/regist-user`, {
                 method: "POST",
                 headers: {
@@ -45,7 +78,6 @@ const SignUpForm = () => {
 
         } catch (error) {
             console.error('Registration error:', error);
-            toast.error("회원가입에 실패했습니다.");
         }
     };
 
