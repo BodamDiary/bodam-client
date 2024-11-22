@@ -56,6 +56,10 @@ export default function Contents() {
         return <p>Error: {error}</p>; // 에러 발생 시
     }
 
+    if (contents == null) {
+        return <p>no contents</p>;
+    }
+
     return (
         <main>
             콘텐츠 페이지
