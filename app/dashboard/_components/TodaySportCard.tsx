@@ -1,7 +1,6 @@
 import React from "react";
 
-import HeartIcon from "@/public/icons/icon-heart.svg";
-import StarIcon from "@/public/icons/icon-star.svg";
+//import StarIcon from "@/public/icons/icon-star.svg";
 import Image from "next/image";
 
 interface TodaySportCardProps {
