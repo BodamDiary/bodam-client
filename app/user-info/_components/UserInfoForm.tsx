@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import ProfileImageUpload from "@/app/_components/ProfileImageUpload";
-import { toast } from "sonner";
+import ErrorPage from "@/app/_components/ErrorPage";
 
 interface User {
     userId: number;
@@ -73,17 +73,20 @@ export default function UserInfoForm() {
         getUser();
     }, []); // userId가 변경될 때마다 실행
 
-        if (loading) {
-            return <p>Loading...</p>;
-        }
+    if (unauthorized){
+        return <ErrorPage />
+    }
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
-        if (error) {
-            return <p>Error: {error}</p>;
-        }
+    if (error) {
+        return <p>Error: {error}</p>;
+    }
 
-      if (!user){
-          return null;
-      }
+    if (!user){
+      return null;
+    }
 
     return (
         <div className="container mx-auto p-4">
