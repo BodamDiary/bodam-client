@@ -23,11 +23,7 @@ interface Bodam {
     birthday:string;
 }
 
-interface InfoFormProps {
-  userId: number|null; // item이 null일 수 있으므로 null 타입도 포함합니다.
-}
-
-const InfoForm = ({userId} : InfoFormProps) => {
+const InfoForm = () => {
   const router = useRouter();
 
   const goToEditPage = (item: string, id: string) => {
@@ -77,6 +73,7 @@ const InfoForm = ({userId} : InfoFormProps) => {
     const [loading, setLoading] = useState<boolean|null>(true); // 로딩 상태
     const [error, setError] = useState<string|null>(null); // 에러 상태
     const [notFound, setNotFound] = useState<boolean|null>(false);
+    const [unauthorized, setUnauthorized] = useState<boolean|null>(false);
 
     useEffect(() => {
         // 보담 데이터 가져오기 함수
@@ -84,10 +81,17 @@ const InfoForm = ({userId} : InfoFormProps) => {
             try {
                 // Next.js 프록시 API 호출
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-                const response = await fetch(`${apiUrl}/bodam/get-bodam/${userId}`);
+                const response = await fetch(`${apiUrl}/bodam/get-bodam`, {
+                    method: 'GET',
+                    credentials: 'include',
+                });
 
-                if (response.status === 404) {
+                if (response.status == 401) {
+                    setUnauthorized(true);
+                }
+                if (response.status == 204) {
                     setNotFound(true);
+                    throw new Error('등록된 보담이가 없습니다');
                 }
                 else if (!response.ok) {
                     const errorDetails = await response.text();
@@ -107,16 +111,15 @@ const InfoForm = ({userId} : InfoFormProps) => {
             }
         }
 
-        if (userId) {
-            getBodam(); // userId가 있을 때만 데이터 로드
-        } else {
-            setLoading(false);
-            setError("유효하지 않은 사용자 ID입니다.");
-        }
-    }, [userId]); // userId가 변경될 때마다 실행
+        getBodam();
+    }, []);
 
+
+    if (unauthorized) {
+        return;
+    }
     if (loading) {
-        return <p>Loading...</p>;
+        return;
     }
 
     if (notFound) {

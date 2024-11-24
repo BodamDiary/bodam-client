@@ -3,8 +3,6 @@ import TodaySportSection from "./_sections/TodaySportSection";
 import Calendar from "./_components/Calendar";
 import MenuBar from "@/app/_components/MenuBar";
 
-import ErrorPage from "@/app/_components/ErrorPage";
-
 export default async function MainPage() {
 
   return (

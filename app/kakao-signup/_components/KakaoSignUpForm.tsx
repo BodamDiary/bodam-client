@@ -10,28 +10,39 @@ import {toast} from "sonner";
 
 const KakaoSignUpForm = () => {
 //     const email = signin 페이지에서 가져오기
-    const [name, setName] = useState<string>('');
-    const [nickName, setNickName] = useState<string>('');
+    const [userName, setUserName] = useState<string>('');
+    const [nickname, setNickname] = useState<string>('');
     const [address, setAddress] = useState<string>('');
     const router = useRouter();
 
     const handleLoginButton = async () => {
         try {
+            if (userName == null || userName == "") {
+                toast.error("이름 필수")
+                throw new Error("이름 필수")
+            }
+
+            if (nickname == null || nickname == "") {
+                toast.error("닉네임 필수")
+                throw new Error("닉네임 필수")
+            }
+
             const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-            const response = await fetch(`${apiUrl}/users/register-user`, {
+            const response = await fetch(`${apiUrl}/regist-kakao`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    name,
-                    nickName,
+                    userName,
+                    nickname,
                     address,
                 }),
             });
 
             if (!response.ok) {
+                toast.error("회원가입에 실패했습니다.");
                 throw new Error("회원가입에 실패했습니다.");
             }
 
@@ -39,8 +50,8 @@ const KakaoSignUpForm = () => {
             setTimeout(() => {
                 router.push("/");
             }, 1500);
-        } catch {
-            toast.error("회원가입에 실패했습니다.");
+        } catch (error) {
+            console.error('Registration error:', error);
         }
     };
 
@@ -49,20 +60,20 @@ const KakaoSignUpForm = () => {
 
             <input
                 type="text"
-                id="name"
+                id="userName"
                 className="h-[46px] w-full rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50"
                 placeholder="이름"
-                value={name}
+                value={userName}
                 autoComplete="on"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setUserName(e.target.value)}
             />
             <input
                 type="text"
-                id="nickName"
+                id="nickname"
                 className="h-[46px] w-full rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50"
                 placeholder="닉네임"
-                value={nickName}
-                onChange={(e) => setNickName(e.target.value)}
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
             />
             <input
                 type="text"

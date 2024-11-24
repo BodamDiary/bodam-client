@@ -15,13 +15,15 @@ interface User {
     profileImage: string;
     agreeCondition: boolean;
     isOauth: boolean;
-    createdAt: Date;
+    createdAt: string;
 }
 
 export default function UserInfoForm() {
+
     const [user, setUser] = useState<User|null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState<boolean|null>(true);
     const [error, setError] = useState<string|null>(null);
+    const [unauthorized, setUnauthorized] = useState<boolean | null>(false);
 
     // 프로필 이미지 업데이트 핸들러
     const handleImageUpdate = (newImageUrl: string) => {
@@ -35,39 +37,53 @@ export default function UserInfoForm() {
 
     // 사용자 정보 가져오기
     useEffect(() => {
-        const fetchUserData = async () => {
+        // 보담 데이터 가져오기 함수
+        async function getUser() {
             try {
+                // Next.js 프록시 API 호출
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
                 const response = await fetch(`${apiUrl}/users/get-user`, {
                     method: 'GET',
                     credentials: 'include',
                 });
 
+                if (response.status == 401) {
+                    setUnauthorized(true);
+                    throw new Error("unauthorized");
+                }
                 if (!response.ok) {
-                    throw new Error('사용자 정보를 불러올 수 없습니다.');
+                    const errorDetails = await response.text();
+                    throw new Error(`사용자 불러오기에 실패했습니다: ${errorDetails}`);
                 }
 
-                const data = await response.json();
-                setUser(data);
-            } catch (err) {
-                const errorMessage = err instanceof Error ? err.message : '오류가 발생했습니다.';
-                setError(errorMessage);
-                toast.error(errorMessage);
+                const data = await response.json(); // JSON 데이터 파싱
+                setUser(data); // 데이터 상태 업데이트
+            } catch (error) {
+                if (error instanceof Error) {
+                    console.error("Error fetching user data:", error.message);
+                    setError(error.message); // 에러 상태 업데이트
+                }
+
             } finally {
-                setLoading(false);
+                setLoading(false); // 로딩 상태 종료
             }
-        };
 
-        fetchUserData();
-    }, []);
+        }
 
-    if (loading) {
-        return <div className="flex justify-center items-center h-screen">Loading...</div>;
-    }
+        getUser();
+    }, []); // userId가 변경될 때마다 실행
 
-    if (error || !user) {
-        return <div className="flex justify-center items-center h-screen text-red-500">{error}</div>;
-    }
+        if (loading) {
+            return <p>Loading...</p>;
+        }
+
+        if (error) {
+            return <p>Error: {error}</p>;
+        }
+
+      if (!user){
+          return null;
+      }
 
     return (
         <div className="container mx-auto p-4">

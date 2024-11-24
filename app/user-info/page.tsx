@@ -13,7 +13,6 @@ export default async function Info() {
 
   const cookieStore = await cookies();
   const JSESSIONID = cookieStore.get('JSESSIONID');
-  const id=10032
 
   if (JSESSIONID == null) {
     return (
@@ -29,7 +28,7 @@ export default async function Info() {
       <div>
         <UserInfoForm/>
       </div>
-       <InfoForm userId={id} />
+       <InfoForm/>
        <MenuBar/>
     </main>
   );

@@ -12,6 +12,17 @@ const SignInForm = () => {
 
     const handleLoginButton = async () => {
         try {
+
+            if (email == null || email == "") {
+                toast.error("이메일을 입력하세요")
+                throw new Error("이름 필수")
+            }
+
+            if (password == null || password == "") {
+                toast.error("비밀번호를 입력하세요")
+                throw new Error("비밀번호 필수")
+            }
+
             const apiUrl = process.env.NEXT_PUBLIC_API_URL;
             const response = await fetch(`${apiUrl}/users/login-user`, {
                 method: "POST",
@@ -25,6 +36,7 @@ const SignInForm = () => {
                 }),            });
 
             if (!response.ok) {
+                toast.error("로그인에 실패했습니다.");
                 throw new Error("로그인에 실패했습니다.");
             }
 
@@ -32,8 +44,8 @@ const SignInForm = () => {
             setTimeout(() => {
                 router.push("/dashboard");
             }, 1500);
-        } catch {
-            toast.error("로그인에 실패했습니다.");
+        } catch(error) {
+            console.error('Registration error:', error);
         }
     };
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import ErrorPage from "@/app/_components/ErrorPage";
 
 function formatDate(dateString: string): string {
     const date = new Date(dateString);
@@ -27,6 +28,8 @@ export default function DiaryList() {
     const [diaries, setDiaries] = useState<DiaryData[]>([]);
     const [search, setSearch] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+    const [noContent, setNoContent] = useState<boolean | null>(false);
+    const [unauthorized, setUnauthorized] = useState<boolean | null>(false);
 
     useEffect(() => {
         async function fetchDiaries() {
@@ -37,7 +40,14 @@ export default function DiaryList() {
                     credentials: 'include',
                 });
 
-                if (!response.ok) {
+                if (response.status === 401) {
+                    setUnauthorized(true);
+                }
+                else if (response.status === 204) {
+                    setNoContent(true);
+                    throw new Error('등록된 일기가 없습니다');
+                }
+                else if (!response.ok) {
                     const errorDetails = await response.text();
                     throw new Error(`일기 불러오기에 실패했습니다: ${errorDetails}`);
                 }
@@ -57,7 +67,13 @@ export default function DiaryList() {
         diary.title.includes(search) || diary.studyContent.includes(search) || diary.body.includes(search)
     );
 
-    if (error) {
+    if (unauthorized) {
+        return (
+            <ErrorPage />
+        )
+    }
+
+    if (error && !noContent) {
         return <div>{error}</div>;
     }
 
@@ -86,7 +102,18 @@ export default function DiaryList() {
 
             <div className="mt-32 mx-6 mb-24">
                 {filteredDiaries.length === 0 ? (
-                    <p>일기가 없습니다.</p>
+                    <div>
+                        <div className="mb-4">
+                            등록된 일기가 없습니다.
+                        </div>
+                        <div className="flex justify-center">
+                            <div className="flex justify-center items-center w-5/6 h-12 bg-main_300 text-white rounded-2xl">
+                                <Link href="/write-diary">
+                                    일기 등록하기
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
                 ) : (
                     filteredDiaries.map((diary) => (
                         <div key={diary.diaryId} className="mb-10">

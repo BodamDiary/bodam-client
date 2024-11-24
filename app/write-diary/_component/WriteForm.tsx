@@ -8,7 +8,7 @@ import {toast} from "sonner";
 export default function WriteForm() {
     const router = useRouter();
 
-    const [diaryRegister, setDiaryRegister] = useState(false);
+    const [diaryRegister, setDiaryRegister] = useState<boolean>(false);
     const register = () => setDiaryRegister(!diaryRegister);
 
     const [title, setTitle] = useState<string>('');
@@ -49,20 +49,27 @@ export default function WriteForm() {
 
 
                 if (!res.ok) {
+
+                if (res.status === 401) {
+                    toast.error("권한이 없습니다");
+                }
+                    throw new Error("unauthorized");
+                }
+                if (!res.ok) {
                     alert("일기 등록이 정상적으로 이루어지지 않았습니다. 나중에 다시 시도해주세요.");
                     throw new Error("Failed to register diary.");
-                } else {
-                    toast.success("일기가 등록되었습니다.");
-
-                    const response = await res.json();
-                    setTimeout(() => {
-                        router.push(`/diary-detail?diaryId=${response.diaryId}`); // 대시보드 페이지로 이동
-                    }, 1500);
-
-
-                    router.replace(`/diary-detail?diaryId=${response}`); // 원하는 경로로 이동
                 }
+
+                toast.success("일기가 등록되었습니다.");
+
+                const response = await res.json();
+                setTimeout(() => {
+                    router.push(`/diary-detail?diaryId=${response.diaryId}`); // 대시보드 페이지로 이동
+                }, 1500);
+
+
             } catch (error){
+                console.error("error:" + error);
                 router.refresh();
                 throw error;
             }
@@ -73,7 +80,6 @@ export default function WriteForm() {
         }
 
     }, [diaryRegister, title,  studyContent, body, imageFiles]);
-
 
     const handleImagesChange = (files: File[]) => {
         setImageFiles(files)

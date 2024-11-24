@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 import MenuBar from "@/app/_components/MenuBar";
 import BackButton from "@/app/_components/BackButton";
+import ErrorPage from "@/app/_components/ErrorPage";
 
 interface DiaryData {
     diaryId: number;
@@ -37,16 +38,13 @@ function formatDate(dateString: string): string {
 
 export default function DiaryDetail() {
     const searchParams = useSearchParams();
-    const router = useRouter();
     const diaryId = searchParams.get('diaryId');
+    const router = useRouter();
 
     const [diaryData, setDiaryData] = useState<DiaryData|null>(null); // 일기 데이터를 저장
     const [loading, setLoading] = useState<boolean|null>(true); // 로딩 상태
     const [error, setError] = useState<string|null>(null); // 에러 상태
     const menuRef = useRef<HTMLDivElement>(null);
-
-    const [isUpdate, setIsUpdate] = useState(false);
-    const update = () => setIsUpdate(!isUpdate);
 
     const [isDelete, setIsDelete] = useState(false);
     const deleteDiary = () => setIsDelete(!isDelete);
@@ -57,6 +55,8 @@ export default function DiaryDetail() {
     const [diaryDeleted, setDiaryDeleted] = useState(false);
     const deleted = () => setDiaryDeleted(!diaryDeleted);
 
+    const [unauthorized, setUnauthorized] = useState<boolean | null>(false);
+
     useEffect(() => {
         const diaryDeletion = async function() {
             try {
@@ -66,6 +66,7 @@ export default function DiaryDetail() {
                     headers: {
                         "Content-Type": "application/json", // 요청 본문이 JSON임을 명시
                     },
+                    credentials: 'include',
                     body: JSON.stringify({ diaryId }), // 필요한 데이터 전달
                 });
                 if (!res.ok) {
@@ -98,8 +99,14 @@ export default function DiaryDetail() {
         const fetchDiaryData = async () => {
 
             const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-            const res = await fetch(`${apiUrl}/diary/get-diary/${diaryId}`);
-            if (!res.ok) {
+            const res = await fetch(`${apiUrl}/diary/get-diary/${diaryId}`,{
+                method: 'GET',
+                credentials: 'include',
+            });
+
+            if (res.status == 401) {
+                setUnauthorized(true);
+            } else if (!res.ok) {
                 setError("diary not found");
             }
             const data = await res.json();
@@ -125,9 +132,18 @@ export default function DiaryDetail() {
         };
     }, []);
 
+    function diaryUpdate() {
+       router.push(`/diary-update?diaryId=${diaryId}`);
+    }
+
+    if (unauthorized) {
+        return (
+            <ErrorPage/>
+        )
+    }
 
     if (loading) {
-        return <p>Loading...</p>;
+        return;
     }
 
     if (error) {
@@ -147,27 +163,11 @@ export default function DiaryDetail() {
 
                         {menuOpen && (
                             <div className="absolute top-8 right-0 w-32 bg-white shadow-lg border rounded-lg px-2 py-3 z-50">
-                                <button onClick={update} className="text-left px-2 mb-1 hover:bg-gray-100">일기 수정</button>
+                                <button onClick={diaryUpdate} className="text-left px-2 mb-1 hover:bg-gray-100">일기 수정</button>
                                 <button onClick={deleteDiary} className="text-left px-2 hover:bg-gray-100">일기 삭제</button>
                             </div>
                         )}
 
-                        {isUpdate && (
-                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                                <div className="bg-white rounded-2xl p-6 w-80 shadow-lg relative">
-                                    <h2 className="flex justify-center text-lg font-bold mb-4">로그아웃</h2>
-                                    <p className="flex justify-center mb-4 text-gray-500">계정에서 로그아웃 하시겠어요?</p>
-                                    <div className="flex justify-around">
-                                        <button onClick={update} className="mt-4 px-4 py-1 w-32 h-10 bg-white border-2 border-main_600 text-main_600 rounded-xl">
-                                            취소
-                                        </button>
-                                        <button onClick={update} className="mt-4 px-4 py-2 w-32 h-10 bg-main_600 text-white rounded-xl">
-                                            로그아웃
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
                         {isDelete && (
                             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                                 <div className="bg-white rounded-lg p-6 w-80 shadow-lg relative">
@@ -204,7 +204,7 @@ export default function DiaryDetail() {
             {/* Scrollable body section */}
             {diaryData && (
                 <div className="flex-1 overflow-y-auto p-4 mx-2 mt-7 mb-24">
-                    <p>{diaryData.body}</p>
+                    <p className="whitespace-pre-wrap">{diaryData.body}</p>
                 </div>
             )}
             <MenuBar/>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-const url = `${apiUrl}/kakao`
+
 
 export default function SignUpPage(){
     return(
@@ -28,7 +28,7 @@ export default function SignUpPage(){
                 </Link>
                 <div className="mt-[35px] w-full flex flex-col justify-center">
                     <Link
-                        href={url}
+                        href="/signin"
                         className="w-full flex justify-center">
                         <span className="text-sm font-medium text-gray-400">
                             이미 계정이 있으신가요? {" "}
