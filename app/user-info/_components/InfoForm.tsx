@@ -84,9 +84,9 @@ const InfoForm = ({userId} : InfoFormProps) => {
             try {
                 // Next.js 프록시 API 호출
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-                const response = await fetch(`${apiUrl}/bodam/get-bodam`);
+                const response = await fetch(`${apiUrl}/bodam/get-bodam/${userId}`);
 
-                if (response.status === '404') {
+                if (response.status === 404) {
                     setNotFound(true);
                 }
                 else if (!response.ok) {
@@ -119,7 +119,7 @@ const InfoForm = ({userId} : InfoFormProps) => {
         return <p>Loading...</p>;
     }
 
-    if (setNotFound) {
+    if (notFound) {
         return (
             <div className="flex justify-center my-4">
                 <div className="w-5/6 h-[40px] bg-main_300 text-white rounded-2xl flex items-center justify-center">
