@@ -2,6 +2,8 @@
 
 import {useState, useEffect} from "react";
 import { useRouter } from "next/navigation";
+import DiaryImageUpload from "@/app/write-diary/_component/DiaryImageUpload";
+import {toast} from "sonner";
 
 export default function WriteForm() {
     const router = useRouter();
@@ -9,28 +11,55 @@ export default function WriteForm() {
     const [diaryRegister, setDiaryRegister] = useState(false);
     const register = () => setDiaryRegister(!diaryRegister);
 
+    const [title, setTitle] = useState<string>('');
+    const [studyContent, setStudyContent] = useState<string>('');
+    const [body, setBody] = useState<string>('');
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
     useEffect(() => {
         const diaryRegistration = async function() {
             try {
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-                const res = await fetch(`${apiUrl}/diary/regist-diary`, {
-                    method: "POST", // POST 요청
-                    headers: {
-                        "Content-Type": "application/json", // 요청 본문이 JSON임을 명시
-                    },
-                    credentials: 'include',
-                    body: JSON.stringify({
-                        title,
-                        studyContent,
-                        body
-                    }), // 필요한 데이터 전달
+                const formData = new FormData();
+
+                console.log('Image Files:', imageFiles);
+                imageFiles.forEach(file => {
+                    formData.append('diaryImages', file);
                 });
+
+                formData.append('diary', JSON.stringify({
+                    title,
+                    studyContent,
+                    body
+                }));
+
+                // 요청 전에 FormData 내용 확인
+                for (const pair of formData.entries()) {
+                    console.log(pair[0], pair[1]);
+                }
+
+                const res = await fetch(`${apiUrl}/diary/regist-diary`, {
+                    method: "POST",
+                    credentials: 'include',
+                    body: formData
+                });
+
+                console.log("res ::" , res);
+
+                console.log('Server Response Status:', res.status);
+
+
                 if (!res.ok) {
                     alert("일기 등록이 정상적으로 이루어지지 않았습니다. 나중에 다시 시도해주세요.");
                     throw new Error("Failed to register diary.");
                 } else {
-                    alert("일기가 등록되었습니다.");
+                    toast.success("일기가 등록되었습니다.");
+
                     const response = await res.json();
+                    setTimeout(() => {
+                        router.push(`/diary-detail?diaryId=${response.diaryId}`); // 대시보드 페이지로 이동
+                    }, 1500);
+
+
                     router.replace(`/diary-detail?diaryId=${response}`); // 원하는 경로로 이동
                 }
             } catch (error){
@@ -43,16 +72,17 @@ export default function WriteForm() {
             diaryRegistration();
         }
 
-    }, [diaryRegister]);
+    }, [diaryRegister, title,  studyContent, body, imageFiles]);
 
-    const [title, setTitle] = useState<string>('');
-    const [studyContent, setStudyContent] = useState<string>('');
-    const [body, setBody] = useState<string>('');
 
+    const handleImagesChange = (files: File[]) => {
+        setImageFiles(files)
+    }
     return (
 
         <>
             <div>
+                <DiaryImageUpload onImageChange={handleImagesChange}/>
             </div>
             <div className="ml-1 mb-1 my-2.5 font-medium text-sm">
                 제목
