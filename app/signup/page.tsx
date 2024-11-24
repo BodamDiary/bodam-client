@@ -3,9 +3,6 @@ import SignUpForm from "./_components/SignUpForm";
 import Link from "next/link";
 import Image from "next/image";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-
 export default function SignUpPage(){
     return(
         <main className="flex min-h-screen flex-col items-center select-none overflow-x-hidden overflow-y-hidden">
