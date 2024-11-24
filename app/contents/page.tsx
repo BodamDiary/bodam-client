@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import BackButton from "@/app/_components/BackButton";
+import MenuBar from "@/app/_components/MenuBar";
 
 interface Content {
     title: string;
@@ -62,31 +64,36 @@ export default function Contents() {
 
     return (
         <main>
-            콘텐츠 페이지
-                {contents.map((content) => (
-                    <div key={content.contentId} className="mb-10">
-                        <Link
-                            href={{
-                                pathname: `/content-detail`,
-                                query: { contentId: content.contentId },
-                            }}
-                        >
-                        <div className="flex justify-around">
-                            <Image
-                              src={content.thumbnail}
-                              alt="YouTube Thumbnail"
-                              width={257} // 원하는 너비
-                              height={182} // 원하는 높이
-                            />
-                            <div>
-                                <h3 className="text-lg font-semibold mb-2">{content.title}</h3>
-                                <p className="text-base text-gray-700 whitespace-pre-wrap">{content.tag}</p>
-                                <p className="text-base text-gray-700 whitespace-pre-wrap">난이도: {content.difficulty}</p>
+            <div className="w-full fixed top-0 px-4 pb-3 pt-5 bg-white">
+                <BackButton/>
+            </div>
+                <div className="mt-16 mx-4 mb-28">
+                    {contents.map((content) => (
+                        <div key={content.contentId} className="mb-5">
+                            <Link
+                                href={{
+                                    pathname: `/content-detail`,
+                                    query: { contentId: content.contentId },
+                                }}
+                            >
+                            <div className="flex justify-around">
+                                <Image
+                                  src={content.thumbnail}
+                                  alt="YouTube Thumbnail"
+                                  width={130} // 원하는 너비
+                                  height={80} // 원하는 높이
+                                />
+                                <div>
+                                    <h3 className="text-lg font-semibold mb-2">{content.title}</h3>
+                                    <p className="text-base text-gray-700 whitespace-pre-wrap">{content.tag}</p>
+                                    <p className="text-base text-gray-700 whitespace-pre-wrap">난이도: {content.difficulty}</p>
+                                </div>
                             </div>
+                            </Link>
                         </div>
-                        </Link>
-                    </div>
-                ))}
+                    ))}
+                </div>
+            <MenuBar />
         </main>
     )
 }

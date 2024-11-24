@@ -4,6 +4,7 @@ import React from "react";
 import TodaySportHeader from "../_components/TodaySportHeader";
 import TodaySportCard from "../_components/TodaySportCard";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 interface Content {
     title: string;
@@ -74,13 +75,20 @@ const TodaySportSection = () => {
       <div className="overflow-x-scroll pr-5">
         <div className="w-max flex flex-row justify-start items-center gap-x-4 ">
           {exercises.map((exercise) => (
-            <TodaySportCard
-              key={exercise.contentId}
-              id={exercise.contentId}
-              title={exercise.tag}
-              image={exercise.thumbnail}
-              difficulty={exercise.difficulty}
-            />
+            <Link
+             href={{
+               pathname: `/content-detail`,
+               query: { contentId: exercise.contentId },
+             }}
+            >
+                <TodaySportCard
+                  key={exercise.contentId}
+                  id={exercise.contentId}
+                  title={exercise.tag}
+                  image={exercise.thumbnail}
+                  difficulty={exercise.difficulty}
+                />
+            </Link>
           ))}
         </div>
       </div>

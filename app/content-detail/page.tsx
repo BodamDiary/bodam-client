@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { useRouter} from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from "react";
 
 import MenuBar from "@/app/_components/MenuBar";
@@ -17,6 +17,9 @@ interface Content {
 
 const ContentDetail = function() {
     const router = useRouter();
+
+    const searchParams = useSearchParams();
+    const contentId = searchParams.get('contentId');
 
     const handleGoBack = () => {
         router.back();
@@ -43,7 +46,7 @@ const ContentDetail = function() {
             try {
                 // Next.js 프록시 API 호출
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-                const response = await fetch(`${apiUrl}/content/get-content/1`);
+                const response = await fetch(`${apiUrl}/content/get-content/${contentId}`);
 
                 if (!response.ok) {
                     const errorDetails = await response.text();
