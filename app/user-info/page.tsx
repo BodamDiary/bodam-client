@@ -15,6 +15,7 @@ export default async function Info() {
   const JSESSIONID = cookieStore.get('JSESSIONID');
 
   if (JSESSIONID == null) {
+      console.log("hello jsessionID is null");
     return (
       <ErrorPage/>
     )
