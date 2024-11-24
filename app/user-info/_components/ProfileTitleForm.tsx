@@ -29,6 +29,9 @@ const ProfileTitleForm = () => {
     const [isDelete, setIsDelete] = useState(false);
     const deleteAccount = () => setIsDelete(!isDelete);
 
+    const [isAnalyze, setIsAnalyze] = useState(false);
+    const analyze = () => setIsAnalyze(!isAnalyze);
+
     const logoutExecute = async () => {
         try {
 
@@ -89,6 +92,27 @@ const ProfileTitleForm = () => {
         };
     }, []);
 
+    const handleAnalyze = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/analyze-diaries', {
+                method: 'GET',
+                credentials: 'include',
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch analysis');
+            }
+            const result = await response.json();
+            if (result.pdfUrl) {
+                window.open(result.pdfUrl, '_blank');
+            } else {
+                alert('Analysis completed, but no PDF URL was returned.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while performing the analysis.');
+        }
+    };
+
     return (
         <>
             <BackButton/>
@@ -100,8 +124,26 @@ const ProfileTitleForm = () => {
 
                 {menuOpen && (
                     <div className="absolute top-8 right-0 w-32 bg-white shadow-lg border rounded-lg px-2 py-3 z-50">
+                        <button onClick={analyze} className="text-left px-2 mb-1 hover:bg-gray-100">보담 분석하기</button>
                         <button onClick={logout} className="text-left px-2 mb-1 hover:bg-gray-100">로그아웃</button>
                         <button onClick={deleteAccount} className="text-left px-2 hover:bg-gray-100">회원 탈퇴</button>
+                    </div>
+                )}
+
+                {isAnalyze && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white rounded-2xl p-6 w-80 shadow-lg relative">
+                            <h2 className="flex justify-center text-lg font-bold mb-4">보담이 분석</h2>
+                            <p className="flex justify-center mb-4 text-gray-500">보담이 분석 PDF 파일을 생성하시겠어요?</p>
+                            <div className="flex justify-around">
+                                <button onClick={analyze} className="mt-4 px-4 py-1 w-32 h-10 bg-white border-2 border-main_600 text-main_600 rounded-xl">
+                                    취소
+                                </button>
+                                <button onClick={handleAnalyze} className="mt-4 px-4 py-2 w-32 h-10 bg-main_600 text-white rounded-xl">
+                                    파일 생성하기
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
 
