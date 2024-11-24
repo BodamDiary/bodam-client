@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import ProfileImageUpload from "@/app/_components/ProfileImageUpload";
+import { toast } from "sonner";
 
 interface User {
     userId: number;
@@ -12,31 +12,31 @@ interface User {
     userName: string;
     address: string;
     phoneNumber: string;
+    profileImage: string;
     agreeCondition: boolean;
     isOauth: boolean;
-    createdAt: String;
+    createdAt: Date;
 }
 
-const EditProfileIcon = () => (
-  <Image
-    src="/icons/icon-editProfile.svg"
-    alt="edit profile icon"
-    width={25}
-    height={25}
-  />
-);
-
 export default function UserInfoForm() {
-
     const [user, setUser] = useState<User|null>(null);
-    const [loading, setLoading] = useState<boolean|null>(true);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string|null>(null);
 
+    // 프로필 이미지 업데이트 핸들러
+    const handleImageUpdate = (newImageUrl: string) => {
+        if (user) {
+            setUser({
+                ...user,
+                profileImage: newImageUrl
+            });
+        }
+    };
+
+    // 사용자 정보 가져오기
     useEffect(() => {
-        // 보담 데이터 가져오기 함수
-        async function getUser() {
+        const fetchUserData = async () => {
             try {
-                // Next.js 프록시 API 호출
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
                 const response = await fetch(`${apiUrl}/users/get-user`, {
                     method: 'GET',
@@ -44,60 +44,41 @@ export default function UserInfoForm() {
                 });
 
                 if (!response.ok) {
-                    const errorDetails = await response.text();
-                    throw new Error(`사용자 불러오기에 실패했습니다: ${errorDetails}`);
+                    throw new Error('사용자 정보를 불러올 수 없습니다.');
                 }
 
-                const data = await response.json(); // JSON 데이터 파싱
-                setUser(data); // 데이터 상태 업데이트
-            } catch (error) {
-                if (error instanceof Error) {
-                    console.error("Error fetching user data:", error.message);
-                    setError(error.message); // 에러 상태 업데이트
-                }
-
+                const data = await response.json();
+                setUser(data);
+            } catch (err) {
+                const errorMessage = err instanceof Error ? err.message : '오류가 발생했습니다.';
+                setError(errorMessage);
+                toast.error(errorMessage);
             } finally {
-                setLoading(false); // 로딩 상태 종료
+                setLoading(false);
             }
+        };
 
-        }
+        fetchUserData();
+    }, []);
 
-        getUser();
-    }, []); // userId가 변경될 때마다 실행
+    if (loading) {
+        return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    }
 
-        if (loading) {
-            return <p>Loading...</p>;
-        }
-
-        if (error) {
-            return <p>Error: {error}</p>;
-        }
-
-      if (!user){
-          return null;
-      }
+    if (error || !user) {
+        return <div className="flex justify-center items-center h-screen text-red-500">{error}</div>;
+    }
 
     return (
-        <>
-            <div className="flex justify-center mt-18 pt-8 pb-4">
-              <div className="relative">
-                <Image
-                  src="/images/profileImg.svg"
-                  alt="profile image"
-                  width={80}
-                  height={80}
+        <div className="container mx-auto p-4">
+            <div className="flex flex-col items-center gap-1 mt-3">
+                <ProfileImageUpload
+                    profileImage={user.profileImage}
+                    onImageUpdate={handleImageUpdate}
                 />
-                <div className="absolute bottom-0 right-0">
-                  <Link href="/">
-                    <EditProfileIcon />
-                  </Link>
-                </div>
-              </div>
+                <h2 className="text-xl font-bold">{user.nickname}</h2>
+                <p className="text-gray-600">{user.email}</p>
             </div>
-            <div className="flex justify-center font-bold">{user.nickname}</div>
-            <div className="flex justify-center text-sm text-slate-500">
-              {user.email}
-            </div>
-        </>
-    )
+        </div>
+    );
 }
