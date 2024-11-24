@@ -28,7 +28,6 @@ export default function DiaryList() {
     const [diaries, setDiaries] = useState<DiaryData[]>([]);
     const [search, setSearch] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
-    const [noContent, setNoContent] = useState<boolean | null>(false);
     const [unauthorized, setUnauthorized] = useState<boolean | null>(false);
 
     useEffect(() => {
@@ -42,10 +41,6 @@ export default function DiaryList() {
 
                 if (response.status === 401) {
                     setUnauthorized(true);
-                }
-                else if (response.status === 204) {
-                    setNoContent(true);
-                    throw new Error('등록된 일기가 없습니다');
                 }
                 else if (!response.ok) {
                     const errorDetails = await response.text();
@@ -73,7 +68,7 @@ export default function DiaryList() {
         )
     }
 
-    if (error && !noContent) {
+    if (error) {
         return <div>{error}</div>;
     }
 
