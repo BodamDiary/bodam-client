@@ -30,7 +30,10 @@ const TodaySportSection = () => {
             try {
                 // Next.js 프록시 API 호출
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-                const response = await fetch(`${apiUrl}/content/get-today-content`);
+                const response = await fetch(`${apiUrl}/content/get-today-content`, {
+                    method: 'GET',
+                    credentials: 'include',
+                });
 
                 if (!response.ok) {
                     const errorDetails = await response.text();
