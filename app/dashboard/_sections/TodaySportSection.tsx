@@ -79,13 +79,13 @@ const TodaySportSection = () => {
         <div className="w-max flex flex-row justify-start items-center gap-x-4 ">
           {exercises.map((exercise) => (
             <Link
+             key={exercise.contentId}
              href={{
                pathname: `/content-detail`,
                query: { contentId: exercise.contentId },
              }}
             >
                 <TodaySportCard
-                  key={exercise.contentId}
                   id={exercise.contentId}
                   title={exercise.tag}
                   image={exercise.thumbnail}
