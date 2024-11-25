@@ -19,6 +19,7 @@ interface DiaryData {
     userId: number;
     studyContent: string;
     title: string;
+    filePath: string;
     nickname: string;
     body: string;
     createdAt: string;
@@ -123,9 +124,33 @@ export default function DiaryList() {
                                     query: { diaryId: diary.diaryId },
                                 }}
                             >
-                                <h3 className="text-lg font-semibold mb-2">{diary.title}</h3>
-                                <p className="text-base text-gray-700 whitespace-pre-wrap">{diary.studyContent}</p>
-                                <p className="text-base text-gray-700 whitespace-pre-wrap">{formatDate(diary.createdAt)}</p>
+                                <div className="flex items-start gap-4">
+                                    <div className="flex-shrink-0 w-20 h-20">
+                                        <div className="flex-shrink-0">
+                                            {diary.filePath && diary.filePath.trim() !== "" ? (
+                                                <Image
+                                                    src={diary.filePath}
+                                                    alt="DiaryImage"
+                                                    width={80} // 원하는 너비
+                                                    height={80} // 원하는 높이
+                                                    className="rounded-md" // 스타일 추가 (선택)
+                                                 />
+                                            ) : (
+                                                <Image
+                                                    src="/images/diary.svg"
+                                                    alt="DiaryImage"
+                                                    width={80} // 원하는 너비
+                                                    height={80} // 원하는 높이
+                                                    className="rounded-md" // 스타일 추가 (선택)
+                                                 />                                            )}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-semibold mb-2">{diary.title}</h3>
+                                        <p className="text-base text-gray-700 whitespace-pre-wrap">{diary.studyContent}</p>
+                                        <p className="text-base text-gray-700 whitespace-pre-wrap">{formatDate(diary.createdAt)}</p>
+                                    </div>
+                                </div>
                             </Link>
                         </div>
                     ))

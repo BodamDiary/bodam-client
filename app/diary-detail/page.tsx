@@ -14,6 +14,7 @@ interface DiaryData {
     userId: number;
     studyContent: string;
     title: string;
+    filePaths: string[];
     nickname: string;
     body: string;
     createdAt: string;
@@ -153,7 +154,7 @@ export default function DiaryDetail() {
     return (
         <main>
             {/* Back button and fixed section */}
-            <div className="sticky top-5 z-10 bg-white p-4">
+            <div className="sticky top-5 z-10 bg-white py-4 px-8">
                 <div className="flex justify-between">
                     <BackButton/>
                     <div className="relative" ref={menuRef}>
@@ -186,16 +187,27 @@ export default function DiaryDetail() {
                         )}
                     </div>
                 </div>
-                <div className="h-48 w-full flex items-center justify-center bg-gray-200 rounded-2xl">
-                    이미지
-                </div>
+                {diaryData.filePaths && diaryData.filePaths.length !== 0 && (
+                    <div className="flex overflow-x-auto space-x-4">
+                        {diaryData.filePaths.map(path => (
+                            <div key={path} className="relative flex-shrink-0 w-48 h-48 mr-4">
+                                <Image
+                                    src={path}
+                                    alt="Diary Image"
+                                    fill
+                                    className="object-cover rounded-lg"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
                 {diaryData && (
-                    <div className="mt-4 mx-2">
+                    <div className="mt-6">
                         <div className="flex justify-between">
                             <p className="text-sm text-gray-500">{diaryData.studyContent}</p>
                             <p className="text-sm text-gray-400">{formatDate(diaryData.createdAt)}</p>
                         </div>
-                        <h2 className="font-bold text-xl">{diaryData.title}</h2>
+                        <h2 className="font-bold text-2xl">{diaryData.title}</h2>
                         <p className="text-sm text-gray-500">{diaryData.nickname}</p>
                     </div>
                 )}
@@ -203,7 +215,7 @@ export default function DiaryDetail() {
 
             {/* Scrollable body section */}
             {diaryData && (
-                <div className="flex-1 overflow-y-auto p-4 mx-2 mt-7 mb-24">
+                <div className="flex-1 overflow-y-auto p-4 mx-4 mt-7 mb-24">
                     <p className="whitespace-pre-wrap">{diaryData.body}</p>
                 </div>
             )}

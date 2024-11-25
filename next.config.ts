@@ -31,7 +31,11 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'img.youtube.com',
+                hostname: 'img.youtube.com', // 기존 설정
+            },
+            {
+                protocol: 'https',
+                hostname: 'bodambucket.s3.amazonaws.com', // S3 버킷 도메인 추가
             },
         ],
     },
