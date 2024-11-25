@@ -151,6 +151,10 @@ export default function DiaryDetail() {
         return <p>Error: {error}</p>;
     }
 
+    if (diaryData == null){
+        return;
+    }
+
     return (
         <main>
             {/* Back button and fixed section */}
