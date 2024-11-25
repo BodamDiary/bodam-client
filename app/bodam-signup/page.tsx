@@ -2,6 +2,7 @@
 
 import {ChevronRight, ImageIcon, Check} from "lucide-react"
 import {useState} from "react";
+import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 
 type FormData = {
@@ -15,6 +16,8 @@ type FormData = {
 }
 
 export default function BodamSignupPage(){
+    const router = useRouter();
+
     // Form state
     const [step, setStep] = useState(0)
     const [formData, setFormData] = useState<FormData>({
@@ -51,6 +54,45 @@ export default function BodamSignupPage(){
             setStep(step+1)
         } else {
           console.log('Form submitted:', formData)
+
+          registBodam();
+        }
+    }
+
+
+    const registBodam = async () => {
+        try {
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+            const response = await fetch(`${apiUrl}/bodam/regist-bodam`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    bodamName: formData.name,
+                    bodamGender: formData.gender,
+                    birth: formData.birth,
+                    cognitiveAbility: formData.cognitive_level,
+                    performanceAbility: formData.performance_level
+                }),
+            })
+
+            if (response.status === 401) {
+                alert('권한이 없습니다.');
+                router.push('/');
+            } else if (!response.ok) {
+                alert('보담이 등록 실패');
+                const errorDetails = await response.text();
+                throw new Error(`보담이 등록 실패: ${errorDetails}`);
+            } else {
+                router.replace('/user-info');
+            }
+
+        } catch(error) {
+            if (error instanceof Error)  {
+                console.log(error.message)
+            }
         }
     }
 
