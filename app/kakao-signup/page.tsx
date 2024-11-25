@@ -2,19 +2,7 @@
 import KakaoSignUpForm from "./_components/KakaoSignUpForm";
 import Link from "next/link";
 import Image from "next/image";
-import { cookies } from 'next/headers';
-
-import ErrorPage from "@/app/_components/ErrorPage";
-
 export default async function SignUpPage(){
-
-    const cookieStore = await cookies();
-    const JSESSIONID = cookieStore.get('JSESSIONID');
-    if (JSESSIONID == null) {
-        return (
-            <ErrorPage/>
-        )
-    }
 
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const url = `${apiUrl}/kakao`
