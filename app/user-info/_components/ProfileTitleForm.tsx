@@ -32,10 +32,11 @@ const ProfileTitleForm = () => {
     const [isAnalyze, setIsAnalyze] = useState(false);
     const analyze = () => setIsAnalyze(!isAnalyze);
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
     const logoutExecute = async () => {
         try {
 
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
             const response = await fetch(`${apiUrl}/users/logout-user`, {
                 method: "GET",
                 credentials: 'include',
@@ -58,7 +59,6 @@ const ProfileTitleForm = () => {
     const deleteAccountExecute = async () => {
         try {
 
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
             const response = await fetch(`${apiUrl}/users/delete-user`, {
                 method: "GET",
                 credentials: 'include',
@@ -94,7 +94,7 @@ const ProfileTitleForm = () => {
 
     const handleAnalyze = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/analyze-diaries', {
+            const response = await fetch(`${apiUrl}/api/analyze-diaries`, {
                 method: 'GET',
                 credentials: 'include',
             });
