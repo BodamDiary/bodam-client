@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from "react";
 
 import MenuBar from "@/app/_components/MenuBar";
+import KakaoShareButton from "./_components/KakaoShareButton";
 
 interface Content {
     title: string;
@@ -12,6 +13,8 @@ interface Content {
     tag: string;
     description: string;
     contentId: number;
+    thumbnail: string;
+    youtubeUrl: string;
     difficulty: number;
 }
 
@@ -104,20 +107,30 @@ const ContentDetail = function() {
                         allowFullScreen>
                     </iframe>
 
-                    <div className="w-full bg-white px-6 py-2 border-t border-gray-300">
-                        <div className="flex justify-between mb-1">
-                            <h2 className="font-bold text-xl">{content.title}</h2>
-                            <Image
-                                src="/icons/icon-heart.svg"
-                                alt="heart icon"
-                                width={20}
-                                height={20}
-                            />
+                    <div className="w-full bg-white px-6 py-4 border-t border-gray-300">
+                        <div className="flex justify-between">
+                            <h2 className="font-bold text-2xl">{content.title}</h2>
+                            <div className="flex justify-around items-center">
+                                <div className="mt-1 mr-2">
+                                    <KakaoShareButton
+                                    url={content.youtubeUrl}
+                                    thumbnail={content.thumbnail}
+                                    title={content.title}
+                                    tag={content.tag}
+                                    />
+                                </div>
+                                <Image
+                                    src="/icons/icon-heart.svg"
+                                    alt="heart icon"
+                                    width={20}
+                                    height={20}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="pt-[310px]">
-                    <div className="mx-6 mt-4 mb-40">
+                    <div className="mx-6 mt-8 mb-40">
                         <div className="text-base">{content.tag}</div>
                         <div className="text-sm text-gray-500 mb-5">{content.description}</div>
                         {mainTitles.map((title, index) => (
