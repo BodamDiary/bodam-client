@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import BackButton from "@/app/_components/BackButton";
 import MenuBar from "@/app/_components/MenuBar";
+import Loading from "@/app/loading";
 
 interface Content {
     title: string;
@@ -51,7 +52,7 @@ export default function Contents() {
     }, []); // 빈 의존성 배열로 컴포넌트 첫 렌더링 시에만 실행
 
     if (loading) {
-        return <p>Loading...</p>; // 로딩 중
+        return <Loading /> // 로딩 중
     }
 
     if (error) {

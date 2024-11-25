@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import ProfileImageUpload from "@/app/_components/ProfileImageUpload";
 import ErrorPage from "@/app/_components/ErrorPage";
+import Loading from "@/app/loading";
 
 interface User {
     userId: number;
@@ -82,7 +83,7 @@ export default function UserInfoForm() {
         return <ErrorPage />
     }
     if (loading) {
-        return <p>Loading...</p>;
+        return <Loading />
     }
 
     if (error) {

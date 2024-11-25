@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Loading from "@/app/loading";
 
 interface DiaryData {
     diaryId: number;
@@ -109,7 +110,7 @@ export default function UpdateForm() {
     }
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <Loading />
     }
 
     if (error) {
