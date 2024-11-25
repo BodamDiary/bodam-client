@@ -98,15 +98,24 @@ const ProfileTitleForm = () => {
                 method: 'GET',
                 credentials: 'include',
             });
+
             if (!response.ok) {
                 throw new Error('Failed to fetch analysis');
             }
-            const result = await response.json();
-            if (result.pdfUrl) {
-                window.open(result.pdfUrl, '_blank');
-            } else {
-                alert('Analysis completed, but no PDF URL was returned.');
-            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+
+            // PDF 파일 다운로드
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "analysis-result.pdf"; // 다운로드될 파일명
+            link.click();
+
+            // URL 객체 해제
+            window.URL.revokeObjectURL(url);
+            setIsAnalyze(false);
+
         } catch (error) {
             console.error('Error:', error);
             alert('An error occurred while performing the analysis.');

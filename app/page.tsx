@@ -1,9 +1,11 @@
+"use client"
 
 import KakaoLoginButton from "@/app/_components/KakaoLoginButton";
 import LoginButton from "@/app/_components/LoginButton";
 import Image from "next/image";
 
 export default function Home() {
+
   return(
       <main className="relative">
         <div className="mt-32 mb-16">

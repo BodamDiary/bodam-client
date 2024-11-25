@@ -69,7 +69,7 @@ export default function Contents() {
             </div>
                 <div className="mt-16 mx-4 mb-28">
                     {contents.map((content) => (
-                        <div key={content.contentId} className="mb-5">
+                        <div key={content.contentId} className="mt-5">
                             <Link
                                 href={{
                                     pathname: `/content-detail`,
@@ -90,6 +90,9 @@ export default function Contents() {
                                 </div>
                             </div>
                             </Link>
+                            <div className="mt-5 flex justify-center">
+                                <hr className="w-5/6"/>
+                            </div>
                         </div>
                     ))}
                 </div>
