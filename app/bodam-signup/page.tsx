@@ -7,8 +7,8 @@ import Image from 'next/image'
 
 type FormData = {
     name: string
-    birth: string
-    gender: 'male' | 'female' | null
+    birthday: string
+    gender: 'MALE' | 'FEMALE' | null
     cognitive_level: number
     cognitive_options: string[]
     performance_level: number
@@ -22,7 +22,7 @@ export default function BodamSignupPage(){
     const [step, setStep] = useState(0)
     const [formData, setFormData] = useState<FormData>({
         name: '',
-        birth: '',
+        birthday: '',
         gender: null,
         cognitive_level: 0,
         cognitive_options: [],
@@ -67,12 +67,13 @@ export default function BodamSignupPage(){
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Accept": "application/json",
                 },
                 credentials: 'include',
                 body: JSON.stringify({
                     bodamName: formData.name,
                     bodamGender: formData.gender,
-                    birth: formData.birth,
+                    stringBirthday: formData.birthday,
                     cognitiveAbility: formData.cognitive_level,
                     performanceAbility: formData.performance_level
                 }),
@@ -165,10 +166,10 @@ export default function BodamSignupPage(){
                                         id="birth"
                                         className="h-[46px] w-full rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50"
                                         placeholder="생년월일 (예: 20200101)"
-                                        value={formData.birth}
+                                        value={formData.birthday}
                                         onChange={(e) => setFormData({
                                             ...formData,
-                                            birth: e.target.value
+                                            birthday: e.target.value
                                         })}
                                     />
                                     <div
@@ -177,10 +178,10 @@ export default function BodamSignupPage(){
                                             type="button"
                                             onClick={() => setFormData({
                                                 ...formData,
-                                                gender: 'female'
+                                                gender: 'FEMALE'
                                             })}
                                             className={`rounded-full p-1 ${
-                                                formData.gender === 'female'
+                                                formData.gender === 'FEMALE'
                                                     ? 'bg-blue-300'
                                                     : 'bg-gray-100'
                                             }`}
@@ -197,10 +198,10 @@ export default function BodamSignupPage(){
                                             type="button"
                                             onClick={() => setFormData({
                                                 ...formData,
-                                                gender: 'male'
+                                                gender: 'MALE'
                                             })}
                                             className={`rounded-full p-1 ${
-                                                formData.gender === 'male'
+                                                formData.gender === 'MALE'
                                                     ? 'bg-blue-300'
                                                     : 'bg-gray-100'
                                             }`}
