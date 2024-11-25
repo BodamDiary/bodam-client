@@ -30,6 +30,7 @@ export default function DiaryList() {
     const [search, setSearch] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const [unauthorized, setUnauthorized] = useState<boolean | null>(false);
+    const [noContent, setNoContent] = useState<boolean | null>(false);
 
     useEffect(() => {
         async function fetchDiaries() {
@@ -42,6 +43,9 @@ export default function DiaryList() {
 
                 if (response.status === 401) {
                     setUnauthorized(true);
+                }
+                else if (response.status === 204) {
+                    setNoContent(true);
                 }
                 else if (!response.ok) {
                     const errorDetails = await response.text();
@@ -69,7 +73,7 @@ export default function DiaryList() {
         )
     }
 
-    if (error) {
+    if (error && !noContent) {
         return <div>{error}</div>;
     }
 
