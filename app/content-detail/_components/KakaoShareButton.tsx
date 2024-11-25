@@ -3,6 +3,41 @@
 import { useEffect } from "react";
 import Image from "next/image";
 
+
+interface KakaoShare {
+  sendDefault: (options: {
+    objectType: string;
+    content: {
+      title: string;
+      description: string;
+      imageUrl: string;
+      link: {
+        mobileWebUrl: string;
+        webUrl: string;
+      };
+    };
+    buttons: Array<{
+      title: string;
+      link: {
+        mobileWebUrl: string;
+        webUrl: string;
+      };
+    }>;
+  }) => void;
+}
+
+interface KakaoSDK {
+  init: (key: string) => void;
+  isInitialized: () => boolean;
+  Share: KakaoShare;
+}
+
+declare global {
+  interface Window {
+    Kakao: KakaoSDK;
+  }
+}
+
 interface KakaoShareButtonProps {
   url: string;
   thumbnail: string;
