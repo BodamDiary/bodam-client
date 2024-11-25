@@ -62,8 +62,14 @@ console.log(url);
       }
 
       if (!window.Kakao.isInitialized()) {
-        window.Kakao.init("e854eba76dd1733b0ab3baeb0b60a3a8"); // 자신의 JavaScript Key로 변경
+        const KAKAO_JS_KEY = process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
+        if (!KAKAO_JS_KEY) {
+          console.error("Kakao JavaScript Key가 설정되지 않았습니다.");
+          return;
+        }
+        window.Kakao.init(KAKAO_JS_KEY);
       }
+
     };
 
     loadKakaoSDK().catch((error) => console.error(error));
