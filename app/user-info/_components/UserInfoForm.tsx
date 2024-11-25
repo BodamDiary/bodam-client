@@ -45,6 +45,10 @@ export default function UserInfoForm() {
                 const response = await fetch(`${apiUrl}/users/get-user`, {
                     method: 'GET',
                     credentials: 'include',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
                 });
 
                 if (response.status === 401) {
