@@ -9,7 +9,7 @@ const SignUpForm = () => {
     const [password, setPassword] = useState<string>('');
     const [passwordCheck, setPasswordCheck] = useState<string>('');
     const [userName, setUserName] = useState<string>('');
-    const [nickName, setNickName] = useState<string>('');
+    const [nickname, setNickname] = useState<string>('');
     const [address, setAddress] = useState<string>('');
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showPasswordCheck, setShowPasswordCheck] = useState<boolean>(false);
@@ -34,7 +34,7 @@ const SignUpForm = () => {
                 throw new Error("이름 필수")
             }
 
-            if (nickName == null || nickName == "") {
+            if (nickname == null || nickname == "") {
                 toast.error("닉네임 필수")
                 throw new Error("닉네임 필수")
             }
@@ -60,7 +60,7 @@ const SignUpForm = () => {
                     email,
                     password,
                     userName,
-                    nickName,
+                    nickname,
                     address,
                 }),
             });
@@ -146,8 +146,8 @@ const SignUpForm = () => {
                 id="nickName"
                 className="h-[46px] w-full rounded-2xl focus:outline-none border border-[#E5E5E5] px-5 py-2.5 text-sm font-bold text-placeholder text-opacity-50"
                 placeholder="닉네임"
-                value={nickName}
-                onChange={(e) => setNickName(e.target.value)}
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
             />
             <input
                 type="text"
